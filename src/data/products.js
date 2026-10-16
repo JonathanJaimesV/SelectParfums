@@ -408,11 +408,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/uploads/hawas-kobra-1.jpg",
+      "/assets/images/RASASI/KOBRA/rasasi-hawas-kobra.jpg",
       "/assets/images/RASASI/rasasi-hawas-kobra-2.jpg",
       "/assets/images/RASASI/rasasi-hawas-kobra-3.jpg"
     ],
-    "imagen": "/assets/images/uploads/hawas-kobra-1.jpg"
+    "imagen": "/assets/images/RASASI/KOBRA/rasasi-hawas-kobra.jpg"
   },
   {
     "id": 10,
@@ -449,11 +449,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/uploads/hawas-ice-1.jpg",
+      "/assets/images/RASASI/ICE/rasasi-ice.jpg",
       "/assets/images/RASASI/rasasi-hawas-ice-2.jpg",
       "/assets/images/RASASI/rasasi-hawas-ice-3.jpg"
     ],
-    "imagen": "/assets/images/uploads/hawas-ice-1.jpg"
+    "imagen": "/assets/images/RASASI/ICE/rasasi-ice.jpg"
   },
   {
     "id": 11,
@@ -534,11 +534,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/uploads/hawas-tropical-1.jpg",
+      "/assets/images/RASASI/TROPICAL/rasasi-tropical.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/uploads/hawas-tropical-1.jpg"
+    "imagen": "/assets/images/RASASI/TROPICAL/rasasi-tropical.jpg"
   },
   {
     "id": 13,
@@ -579,11 +579,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/uploads/khamrah-1.jpg",
+      "/assets/images/LATTAFA/KHAMRAH/lattafa-khamrah.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/uploads/khamrah-1.jpg"
+    "imagen": "/assets/images/LATTAFA/KHAMRAH/lattafa-khamrah.jpg"
   },
   {
     "id": 14,
@@ -620,11 +620,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/uploads/asad-1.jpg",
+      "/assets/images/LATTAFA/ASAD/lattafa-asad.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/uploads/asad-1.jpg"
+    "imagen": "/assets/images/LATTAFA/ASAD/lattafa-asad.jpg"
   },
   {
     "id": 15,
@@ -660,11 +660,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/uploads/bourbon-1.jpg",
+      "/assets/images/LATTAFA/BOURBON/lattafa-bourbon.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/uploads/bourbon-1.jpg"
+    "imagen": "/assets/images/LATTAFA/BOURBON/lattafa-bourbon.jpg"
   },
   {
     "id": 16,
@@ -701,11 +701,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/uploads/art-of-universe-1.jpg",
+      "/assets/images/LATTAFA/ART-OF-UNIVERSE/lattafa-aou.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/uploads/art-of-universe-1.jpg"
+    "imagen": "/assets/images/LATTAFA/ART-OF-UNIVERSE/lattafa-aou.jpg"
   },
   {
     "id": 17,
@@ -744,11 +744,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/uploads/qahwa-1.jpg",
+      "/assets/images/LATTAFA/QAHWA/lattafa-qahwa.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/uploads/qahwa-1.jpg"
+    "imagen": "/assets/images/LATTAFA/QAHWA/lattafa-qahwa.jpg"
   },
   {
     "id": 18,
@@ -785,11 +785,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/uploads/nebras-elixir-1.jpg",
+      "/assets/images/LATTAFA/NEBRAS-ELIXIR/lattafa-NElixir.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/uploads/nebras-elixir-1.jpg"
+    "imagen": "/assets/images/LATTAFA/NEBRAS-ELIXIR/lattafa-NElixir.jpg"
   },
   {
     "id": 19,
@@ -826,11 +826,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/uploads/yum-yum-1.jpg",
+      "/assets/images/ARMAF/YUM-YUM/armaf-yumyum.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/uploads/yum-yum-1.jpg"
+    "imagen": "/assets/images/ARMAF/YUM-YUM/armaf-yumyum.jpg"
   }
 ];
 

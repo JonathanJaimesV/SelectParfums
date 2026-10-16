@@ -13,10 +13,12 @@ export const useTitle = (t) => useEffect(() => { document.title = t; }, [t]);
  * Si quieres otros nombres, agrega `imagenes: ["/ruta1.jpg", "/ruta2.jpg", "/ruta3.jpg"]` al perfume.
  */
 export const galleryOf = (p) => {
-  if (p.imagenes) return [0, 1, 2].map((i) => p.imagenes[i] || null);
-  if (!p.imagen) return [null, null, null];
-  const extra = (n) => p.imagen.replace(/(\.\w+)$/, `-${n}$1`);
-  return [p.imagen, extra(2), extra(3)];
+  const hasImgs = Array.isArray(p.imagenes) && p.imagenes.some(Boolean);
+  if (hasImgs) return [0, 1, 2].map((i) => p.imagenes[i] || null);
+  const main = p.imagen || (Array.isArray(p.imagenes) ? p.imagenes.find(Boolean) : null);
+  if (!main) return [null, null, null];
+  const extra = (n) => main.replace(/(\.\w+)$/, `-${n}$1`);
+  return [main, extra(2), extra(3)];
 };
 
 /** "Club de Nuit Intense Man EDT" → "club-de-nuit-intense-man-edt" (para la URL) */

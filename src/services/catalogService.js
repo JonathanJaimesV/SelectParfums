@@ -77,6 +77,24 @@ const uniqNotes = (list = []) => {
   });
 };
 
+const IMAGE_ALIASES = {
+  "/assets/images/uploads/hawas-kobra-1.jpg": "/assets/images/RASASI/KOBRA/rasasi-hawas-kobra.jpg",
+  "/assets/images/uploads/hawas-ice-1.jpg": "/assets/images/RASASI/ICE/rasasi-ice.jpg",
+  "/assets/images/uploads/hawas-tropical-1.jpg": "/assets/images/RASASI/TROPICAL/rasasi-tropical.jpg",
+  "/assets/images/uploads/khamrah-1.jpg": "/assets/images/LATTAFA/KHAMRAH/lattafa-khamrah.jpg",
+  "/assets/images/uploads/asad-1.jpg": "/assets/images/LATTAFA/ASAD/lattafa-asad.jpg",
+  "/assets/images/uploads/bourbon-1.jpg": "/assets/images/LATTAFA/BOURBON/lattafa-bourbon.jpg",
+  "/assets/images/uploads/art-of-universe-1.jpg": "/assets/images/LATTAFA/ART-OF-UNIVERSE/lattafa-aou.jpg",
+  "/assets/images/uploads/qahwa-1.jpg": "/assets/images/LATTAFA/QAHWA/lattafa-qahwa.jpg",
+  "/assets/images/uploads/nebras-elixir-1.jpg": "/assets/images/LATTAFA/NEBRAS-ELIXIR/lattafa-NElixir.jpg",
+  "/assets/images/uploads/yum-yum-1.jpg": "/assets/images/ARMAF/YUM-YUM/armaf-yumyum.jpg",
+};
+
+export const resolveImagePath = (src) => {
+  if (!src) return "";
+  return IMAGE_ALIASES[src] || src;
+};
+
 /** Garantiza que todo producto tenga TODOS los campos con el tipo correcto (evita crashes en Catalog/Detail). */
 export function normalizeProduct(p) {
   const generos = generosOf(p);
@@ -100,10 +118,10 @@ export function normalizeProduct(p) {
     },
   };
   if (Array.isArray(p.imagenes)) {
-    out.imagenes = [0, 1, 2].map((i) => p.imagenes[i] || null);
-    out.imagen = out.imagenes[0] || "";
+    out.imagenes = [0, 1, 2].map((i) => resolveImagePath(p.imagenes[i]) || null);
+    out.imagen = out.imagenes[0] || resolveImagePath(p.imagen) || "";
   } else if (p.imagen) {
-    out.imagen = p.imagen;
+    out.imagen = resolveImagePath(p.imagen);
   }
   return out;
 }

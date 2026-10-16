@@ -5,11 +5,12 @@ import { perfumeSlug } from "../utils";
 
 export default function ProductCard({ p }) {
   const [imgFailed, setImgFailed] = useState(false);
+  const src = p.imagen || (Array.isArray(p.imagenes) ? p.imagenes.find(Boolean) : null);
   return (
     <Reveal as={Link} to={`/perfume/${perfumeSlug(p)}`} className="product-card" aria-label={`Ver detalles de ${p.marca} ${p.nombre}`}>
       <div className="product-card__image">
-        {p.imagen && !imgFailed ? (
-          <img src={p.imagen} alt={`${p.marca} ${p.nombre}`} loading="lazy" onError={() => setImgFailed(true)} />
+        {src && !imgFailed ? (
+          <img src={src} alt={`${p.marca} ${p.nombre}`} loading="lazy" onError={() => setImgFailed(true)} />
         ) : (
           <span className="product-card__image-placeholder">Imagen del perfume</span>
         )}
