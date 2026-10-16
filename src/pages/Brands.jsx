@@ -1,12 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
 import Reveal from "../components/Reveal.jsx";
-import { MARCAS } from "../data/products";
+import { useCatalog } from "../context/CatalogContext.jsx";
 import { useTitle } from "../utils";
 
 export default function Brands() {
   useTitle("Nuestras Casas de Perfumería | SelectParfums");
   const navigate = useNavigate();
+  const { marcas: MARCAS } = useCatalog();
   const go = (nombre) => navigate(`/catalogo?marca=${encodeURIComponent(nombre)}`);
   return (
     <>

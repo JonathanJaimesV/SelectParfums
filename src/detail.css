@@ -1,6 +1,6 @@
 /* Tarjeta clicable + página de detalle + carrusel */
 a.product-card { display: block; color: inherit; text-decoration: none; cursor: pointer; }
-.detail { padding: 40px 0 80px; }
+.detail { padding: 40px 0 60px; }
 .detail__grid { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 24px; }
 @media (min-width: 860px) { .detail__grid { grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start; } }
 
@@ -30,10 +30,187 @@ a.product-card { display: block; color: inherit; text-decoration: none; cursor: 
 .detail__back { display: inline-block; margin-top: 18px; color: var(--text-secondary); }
 .detail__back:hover { color: var(--gold); }
 
-/* Pirámide olfativa */
-.notes { display: grid; gap: 14px; margin-bottom: 28px; }
-.notes__group { padding: 16px 20px; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-sm); }
-.notes__title { margin-bottom: 10px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
-.notes__chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.notes__chips span { padding: 6px 14px; border-radius: var(--radius-pill); background: var(--gold-dim); color: var(--text-primary); font-size: 0.88rem; }
-.notes__empty { color: var(--text-secondary); font-size: 0.88rem; font-style: italic; }
+/* ──────────────────────────────────────────────
+   SECCIÓN DE NOTAS OLFATIVAS (TIPO CARDS ARMONIOSAS)
+   ────────────────────────────────────────────── */
+.fragrance-notes-section {
+  padding: 70px 0 90px;
+  background: linear-gradient(180deg, rgba(31, 20, 51, 0.45) 0%, rgba(21, 13, 34, 0.98) 100%);
+  border-top: 1px solid var(--border-card);
+}
+
+.fragrance-notes__header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 44px;
+}
+
+.fragrance-notes__header .section-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.fragrance-notes__title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.15;
+  margin: 0 0 10px;
+}
+
+.fragrance-notes__subtitle {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.fragrance-notes__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  align-items: stretch;
+}
+
+@media (max-width: 960px) {
+  .fragrance-notes__grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .fragrance-notes__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fragrance-notes__card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.fragrance-notes__card:hover {
+  transform: translateY(-4px);
+  background: var(--bg-card-hover);
+  border-color: rgba(212, 175, 106, 0.45);
+  box-shadow: 0 12px 36px rgba(90, 47, 150, 0.35);
+}
+
+.fragrance-notes__card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  background: #150d22;
+  border-bottom: 1px solid var(--border-card);
+}
+
+.fragrance-notes__card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.fragrance-notes__card:hover .fragrance-notes__card-img {
+  transform: scale(1.04);
+}
+
+.fragrance-notes__card-body {
+  padding: 24px 26px 30px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.fragrance-notes__card-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  margin: 0;
+}
+
+.fragrance-notes__card-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(212, 175, 106, 0.45) 0%, rgba(58, 40, 88, 0.7) 100%);
+  margin: 14px 0 20px;
+}
+
+.fragrance-notes__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fragrance-notes__item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 38px;
+}
+
+.fragrance-notes__icon-wrap {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fragrance-notes__icon-img {
+  max-width: 32px;
+  max-height: 32px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+}
+
+.fragrance-notes__icon-emoji {
+  font-size: 1.25rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  background: var(--gold-dim);
+  border: 1px solid rgba(212, 175, 106, 0.25);
+}
+
+.fragrance-notes__name {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+
+.fragrance-notes__empty {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-style: italic;
+  margin: 8px 0;
+}

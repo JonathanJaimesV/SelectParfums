@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
 import ProductCard from "../components/ProductCard.jsx";
-import { PRODUCTOS } from "../data/products";
+import { useCatalog } from "../context/CatalogContext.jsx";
 import { useTitle } from "../utils";
 
 const HUBS = [
@@ -13,6 +13,7 @@ const HUBS = [
 
 export default function Home() {
   useTitle("SelectParfums — Fragancias Árabes y de Nicho | Frascos y Decants");
+  const { productos: PRODUCTOS } = useCatalog();
   return (
     <>
       <section className="hero" id="inicio">
