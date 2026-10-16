@@ -1,216 +1,154 @@
-/* Tarjeta clicable + página de detalle + carrusel */
-a.product-card { display: block; color: inherit; text-decoration: none; cursor: pointer; }
-.detail { padding: 40px 0 60px; }
-.detail__grid { display: grid; grid-template-columns: 1fr; gap: 32px; margin-top: 24px; }
-@media (min-width: 860px) { .detail__grid { grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start; } }
+/* ═══════════════════════════════════════════════════════════
+   detail.css — Ficha de producto, carrusel, acordeones y notas
+   ═══════════════════════════════════════════════════════════ */
 
+/* ── Página ─────────────────────────────────── */
+.detail { padding: calc(var(--header-h) + var(--safe-t) + 14px) 0 40px; }
+.detail__grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 4px; }
+@media (min-width: 860px) {
+  .detail { padding-bottom: 72px; }
+  .detail__grid { grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: start; margin-top: 12px; }
+  .detail__gallery { position: sticky; top: calc(var(--header-h) + 24px); }
+}
+/* Galería a sangre en móvil: la foto ocupa todo el ancho */
+@media (max-width: 859px) { .detail__gallery { margin: 0 -20px; } }
+
+/* ── Carrusel (scroll-snap nativo: swipe fluido sin JS de gestos) ── */
 .carousel { outline: none; }
-.carousel__viewport { position: relative; overflow: hidden; aspect-ratio: 4 / 5; background: var(--gradient-image); border: 1px solid var(--border-card); border-radius: var(--radius-card); }
-.carousel__track { display: flex; height: 100%; transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
-.carousel__slide { flex: 0 0 100%; display: flex; align-items: center; justify-content: center; }
-.carousel__slide img { width: 100%; height: 100%; object-fit: contain; }
-.carousel__placeholder { padding: 28px 32px; color: var(--text-secondary); border: 1px dashed var(--border-card); border-radius: var(--radius-sm); letter-spacing: 0.04em; }
-.carousel__btn { position: absolute; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border-card); background: rgba(21, 13, 34, 0.75); color: var(--gold); font-size: 1.6rem; line-height: 1; cursor: pointer; transition: background var(--transition); }
-.carousel__btn:hover { background: var(--bg-card-hover); }
+.carousel__viewport { position: relative; background: var(--gradient-image); overflow: hidden; }
+@media (min-width: 860px) { .carousel__viewport { border: 1px solid var(--border-card); border-radius: var(--radius-card); } }
+.carousel__track {
+  display: flex; overflow-x: auto; width: 100%; aspect-ratio: 4 / 5; max-height: 78svh;
+  scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.carousel__track::-webkit-scrollbar { display: none; }
+.carousel__slide { flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
+.carousel__slide img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; user-select: none; -webkit-user-drag: none; }
+.carousel__placeholder {
+  display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 28px; color: var(--text-secondary);
+  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; text-align: center;
+}
+.carousel__placeholder svg { width: 44px; height: 44px; color: var(--gold); opacity: 0.7; }
+
+/* Flechas: solo con puntero fino (en táctil se desliza con el dedo) */
+.carousel__btn {
+  position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; display: none; place-items: center;
+  border: 1px solid var(--gold-line); background: rgba(10, 10, 10, 0.7); color: var(--gold);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: background var(--transition);
+}
+.carousel__btn svg { width: 20px; height: 20px; }
 .carousel__btn--prev { left: 12px; }
 .carousel__btn--next { right: 12px; }
-.carousel__dots { display: flex; justify-content: center; gap: 10px; margin-top: 16px; }
-.carousel__dot { width: 10px; height: 10px; padding: 0; border-radius: 50%; border: 1px solid var(--gold); background: transparent; cursor: pointer; }
-.carousel__dot.is-active { background: var(--gold); }
+@media (hover: hover) and (pointer: fine) {
+  .carousel__btn { display: grid; }
+  .carousel__btn:hover { background: var(--gold-dim); }
+}
 
-.detail__name { margin: 6px 0 16px; font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1.1; color: var(--text-primary); }
+/* Puntos: área táctil de 44px, punto visual pequeño */
+.carousel__dots { display: flex; justify-content: center; }
+.carousel__dot { position: relative; width: 44px; height: 36px; padding: 0; }
+.carousel__dot::before {
+  content: ""; position: absolute; top: 50%; left: 50%; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%;
+  background: var(--border-card); border: 1px solid var(--gold-line); transition: width var(--transition), margin var(--transition), background var(--transition), border-radius var(--transition);
+}
+.carousel__dot.is-active::before { width: 22px; margin-left: -11px; border-radius: 4px; background: var(--gold); border-color: var(--gold); }
+
+/* ── Información ─────────────────────────────── */
+.detail__name { margin: 4px 0 14px; font-family: var(--font-heading); font-size: clamp(2.1rem, 8vw, 3rem); font-weight: 500; letter-spacing: var(--track-wide); line-height: 1.08; }
 .detail__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-.detail__tags span { padding: 6px 14px; border: 1px solid var(--border-card); border-radius: var(--radius-pill); font-size: 0.8rem; color: var(--text-secondary); }
-.detail__desc { margin-bottom: 28px; line-height: 1.7; color: var(--text-secondary); }
-.detail__subtitle { margin-bottom: 8px; font-family: var(--font-heading); font-size: 1.4rem; color: var(--gold); }
-.detail__prices { margin-bottom: 24px; padding: 6px 22px; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-card); }
-.detail__price-row { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border-card); color: var(--text-secondary); }
-.detail__price-row:last-child { border-bottom: none; }
-.detail__price-row strong { font-family: var(--font-price); font-size: 1.05rem; color: var(--color-price); }
-.detail__back { display: inline-block; margin-top: 18px; color: var(--text-secondary); }
-.detail__back:hover { color: var(--gold); }
+.detail__tags span { padding: 6px 14px; border: 1px solid var(--border-card); border-radius: var(--radius-pill); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); }
+.detail__tags span:last-child:not(:first-child) { border-color: var(--gold-line); color: var(--gold); }
+.detail__desc { margin: 20px 0 24px; line-height: 1.8; color: var(--text-secondary); font-size: 0.96rem; }
 
-/* ──────────────────────────────────────────────
-   SECCIÓN DE NOTAS OLFATIVAS (TIPO CARDS ARMONIOSAS)
-   ────────────────────────────────────────────── */
-.fragrance-notes-section {
-  padding: 70px 0 90px;
-  background: linear-gradient(180deg, rgba(31, 20, 51, 0.45) 0%, rgba(21, 13, 34, 0.98) 100%);
-  border-top: 1px solid var(--border-card);
-}
+.detail__priceblock { display: flex; flex-direction: column; gap: 2px; margin-bottom: 16px; }
+.detail__price-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-secondary); }
+.detail__price { font-family: var(--font-price); font-size: clamp(1.9rem, 7vw, 2.4rem); font-weight: 600; color: var(--color-price); letter-spacing: 0.01em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.detail__price.is-consult { font-size: 1.2rem; letter-spacing: 0.16em; text-transform: uppercase; }
 
-.fragrance-notes__header {
-  text-align: center;
-  max-width: 680px;
-  margin: 0 auto 44px;
+/* Selector de formato (versión grande): tarjetas-píldora con precio */
+.size-pills--lg { padding-top: 0; gap: 10px; margin-top: 0; }
+.size-pills--lg .size-pill {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-height: 78px; padding: 8px 4px; border-radius: var(--radius-sm);
 }
+.size-pill__type { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.75; }
+.size-pill__size { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; letter-spacing: 0.03em; line-height: 1.15; }
+.size-pill__price { font-size: 0.74rem; font-variant-numeric: tabular-nums; opacity: 0.9; }
 
-.fragrance-notes__header .section-label {
-  display: inline-block;
-  margin-bottom: 8px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
+.detail__cta { display: none; margin-top: 22px; }
+@media (min-width: 860px) { .detail__cta { display: flex; } }
+.detail__back { display: inline-flex; align-items: center; min-height: 44px; margin-top: 12px; color: var(--text-secondary); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.detail__back:active { color: var(--gold); }
 
-.fragrance-notes__title {
-  font-family: var(--font-heading);
-  font-size: clamp(2.2rem, 4vw, 3rem);
-  font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.15;
-  margin: 0 0 10px;
+/* Barra de compra fija (móvil) */
+.buybar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 950; display: flex; align-items: center; gap: 14px;
+  padding: 12px 20px calc(12px + var(--safe-b)); border-top: 1px solid var(--border-soft);
+  background: rgba(10, 10, 10, 0.88); -webkit-backdrop-filter: blur(18px) saturate(140%); backdrop-filter: blur(18px) saturate(140%);
 }
+.buybar__info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.buybar__label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.buybar__price { font-family: var(--font-price); font-size: 1.3rem; font-weight: 600; color: var(--color-price); line-height: 1.15; }
+.buybar__price.is-consult { font-size: 0.9rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.buybar .product-card__buy { width: auto; flex-shrink: 0; padding: 0 22px; }
+@media (min-width: 860px) { .buybar { display: none; } }
 
-.fragrance-notes__subtitle {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin: 0;
+/* ── Acordeón ────────────────────────────────── */
+.acc { border-top: 1px solid var(--border-card); }
+.acc__item { border-bottom: 1px solid var(--border-card); }
+.acc__head {
+  display: flex; align-items: center; gap: 14px; width: 100%; min-height: 60px; padding: 8px 2px; text-align: left; color: var(--text-primary);
 }
+.acc__media { width: 44px; height: 44px; border-radius: 10px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--border-card); }
+.acc__media img { width: 100%; height: 100%; object-fit: cover; }
+.acc__title { flex: 1; font-family: var(--font-heading); font-size: 1.3rem; font-weight: 500; letter-spacing: var(--track-wide); }
+.acc__count { font-size: 0.7rem; letter-spacing: 0.14em; color: var(--text-secondary); }
+.acc__chev { width: 20px; height: 20px; color: var(--gold); transition: transform var(--transition); flex-shrink: 0; }
+.acc__item.is-open .acc__chev { transform: rotate(180deg); }
+.acc__head:active { background: var(--gold-dim); }
 
-.fragrance-notes__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  align-items: stretch;
-}
+.acc__panel { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows 0.38s var(--ease-out), visibility 0s 0.38s; }
+.acc__item.is-open .acc__panel { grid-template-rows: 1fr; visibility: visible; transition-delay: 0s; }
+.acc__inner { overflow: hidden; min-height: 0; }
+.acc__content { padding: 4px 2px 22px; }
 
-@media (max-width: 960px) {
-  .fragrance-notes__grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-  }
-}
+.acc-dl { display: grid; grid-template-columns: auto 1fr; gap: 12px 20px; font-size: 0.92rem; }
+.acc-dl dt { color: var(--text-secondary); font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; align-self: center; }
+.acc-dl dd { color: var(--text-primary); }
 
-@media (max-width: 640px) {
-  .fragrance-notes__grid {
-    grid-template-columns: 1fr;
-  }
-}
+/* ── Notas olfativas ─────────────────────────── */
+.fragrance-notes-section { padding: 48px 0 56px; background: linear-gradient(180deg, #0f0f0f 0%, var(--bg-primary) 100%); border-top: 1px solid var(--border-card); }
+@media (min-width: 960px) { .fragrance-notes-section { padding: 80px 0 100px; } }
 
-.fragrance-notes__card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--shadow-card);
-  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background var(--transition);
-}
+.fragrance-notes__header { text-align: center; max-width: 680px; margin: 0 auto 28px; }
+@media (min-width: 960px) { .fragrance-notes__header { margin-bottom: 44px; } }
+.fragrance-notes__header .section-label { display: inline-block; }
+.fragrance-notes__title { font-family: var(--font-heading); font-size: clamp(2rem, 6vw, 3rem); font-weight: 500; letter-spacing: var(--track-wide); line-height: 1.15; margin: 0 0 10px; }
+.fragrance-notes__subtitle { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; }
 
-.fragrance-notes__card:hover {
-  transform: translateY(-4px);
-  background: var(--bg-card-hover);
-  border-color: rgba(212, 175, 106, 0.45);
-  box-shadow: 0 12px 36px rgba(90, 47, 150, 0.35);
-}
+/* Móvil: acordeón */
+.fragrance-notes__acc { max-width: 640px; margin: 0 auto; }
+.fragrance-notes__list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.fragrance-notes__item { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 10px; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-sm); }
+.fragrance-notes__icon-wrap { width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.fragrance-notes__icon-img { max-width: 28px; max-height: 28px; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5)); }
+.fragrance-notes__icon-emoji { font-size: 1.1rem; line-height: 1; display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: var(--gold-dim); border: 1px solid var(--gold-line); }
+.fragrance-notes__name { font-size: 0.88rem; font-weight: 500; line-height: 1.25; }
+.fragrance-notes__empty { color: var(--text-secondary); font-size: 0.9rem; font-style: italic; margin: 6px 0; }
 
-.fragrance-notes__card-media {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 11;
-  overflow: hidden;
-  background: #150d22;
-  border-bottom: 1px solid var(--border-card);
+/* Escritorio: tres tarjetas */
+.fragrance-notes__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: stretch; }
+.fragrance-notes__card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-card); overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-card); transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition); }
+@media (hover: hover) and (pointer: fine) {
+  .fragrance-notes__card:hover { transform: translateY(-4px); border-color: var(--gold-line); box-shadow: var(--shadow-hover); }
+  .fragrance-notes__card:hover .fragrance-notes__card-img { transform: scale(1.04); }
 }
-
-.fragrance-notes__card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.5s ease;
-}
-
-.fragrance-notes__card:hover .fragrance-notes__card-img {
-  transform: scale(1.04);
-}
-
-.fragrance-notes__card-body {
-  padding: 24px 26px 30px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.fragrance-notes__card-title {
-  font-family: var(--font-heading);
-  font-size: 1.35rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--gold);
-  margin: 0;
-}
-
-.fragrance-notes__card-divider {
-  height: 1px;
-  background: linear-gradient(90deg, rgba(212, 175, 106, 0.45) 0%, rgba(58, 40, 88, 0.7) 100%);
-  margin: 14px 0 20px;
-}
-
-.fragrance-notes__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.fragrance-notes__item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-height: 38px;
-}
-
-.fragrance-notes__icon-wrap {
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.fragrance-notes__icon-img {
-  max-width: 32px;
-  max-height: 32px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
-}
-
-.fragrance-notes__icon-emoji {
-  font-size: 1.25rem;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-sm);
-  background: var(--gold-dim);
-  border: 1px solid rgba(212, 175, 106, 0.25);
-}
-
-.fragrance-notes__name {
-  font-family: var(--font-body);
-  font-size: 0.98rem;
-  font-weight: 500;
-  color: var(--text-primary);
-  letter-spacing: 0.01em;
-}
-
-.fragrance-notes__empty {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  font-style: italic;
-  margin: 8px 0;
-}
+.fragrance-notes__card-media { position: relative; width: 100%; aspect-ratio: 16 / 11; overflow: hidden; background: #0e0e0e; border-bottom: 1px solid var(--border-card); }
+.fragrance-notes__card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.fragrance-notes__card-body { padding: 24px 26px 30px; flex: 1; }
+.fragrance-notes__card-title { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 500; letter-spacing: 0.08em; color: var(--gold); margin: 0; }
+.fragrance-notes__card-divider { height: 1px; background: linear-gradient(90deg, var(--gold-line) 0%, var(--border-card) 100%); margin: 14px 0 20px; }
+.fragrance-notes__card .fragrance-notes__list { grid-template-columns: 1fr; gap: 12px; }
+.fragrance-notes__card .fragrance-notes__item { background: none; border: 0; padding: 0; min-height: 38px; gap: 14px; }
+.fragrance-notes__card .fragrance-notes__icon-wrap { width: 38px; height: 38px; }
+.fragrance-notes__card .fragrance-notes__icon-img { max-width: 32px; max-height: 32px; }
+.fragrance-notes__card .fragrance-notes__name { font-size: 0.98rem; }

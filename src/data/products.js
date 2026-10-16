@@ -369,11 +369,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/FRENCH-AVENUE/fa-vulcan-feu.jpg",
+      "/assets/images/FRENCH-AVENUE/VULCAN-FEU/fa-VulcanFeu.jpg",
       "/assets/images/FRENCH-AVENUE/fa-vulcan-feu-2.jpg",
       "/assets/images/FRENCH-AVENUE/fa-vulcan-feu-3.jpg"
     ],
-    "imagen": "/assets/images/FRENCH-AVENUE/fa-vulcan-feu.jpg"
+    "imagen": "/assets/images/FRENCH-AVENUE/VULCAN-FEU/fa-VulcanFeu.jpg"
   },
   {
     "id": 9,
@@ -408,11 +408,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/RASASI/KOBRA/rasasi-hawas-kobra.jpg",
+      "/assets/images/uploads/hawas-kobra-1.jpg",
       "/assets/images/RASASI/rasasi-hawas-kobra-2.jpg",
       "/assets/images/RASASI/rasasi-hawas-kobra-3.jpg"
     ],
-    "imagen": "/assets/images/RASASI/KOBRA/rasasi-hawas-kobra.jpg"
+    "imagen": "/assets/images/uploads/hawas-kobra-1.jpg"
   },
   {
     "id": 10,
@@ -449,11 +449,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/RASASI/ICE/rasasi-ice.jpg",
+      "/assets/images/uploads/hawas-ice-1.jpg",
       "/assets/images/RASASI/rasasi-hawas-ice-2.jpg",
       "/assets/images/RASASI/rasasi-hawas-ice-3.jpg"
     ],
-    "imagen": "/assets/images/RASASI/ICE/rasasi-ice.jpg"
+    "imagen": "/assets/images/uploads/hawas-ice-1.jpg"
   },
   {
     "id": 11,
@@ -534,11 +534,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/RASASI/TROPICAL/rasasi-tropical.jpg",
+      "/assets/images/uploads/hawas-tropical-1.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/RASASI/TROPICAL/rasasi-tropical.jpg"
+    "imagen": "/assets/images/uploads/hawas-tropical-1.jpg"
   },
   {
     "id": 13,
@@ -579,11 +579,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/LATTAFA/KHAMRAH/lattafa-khamrah.jpg",
+      "/assets/images/uploads/khamrah-1.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/LATTAFA/KHAMRAH/lattafa-khamrah.jpg"
+    "imagen": "/assets/images/uploads/khamrah-1.jpg"
   },
   {
     "id": 14,
@@ -620,11 +620,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/LATTAFA/ASAD/lattafa-asad.jpg",
+      "/assets/images/uploads/asad-1.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/LATTAFA/ASAD/lattafa-asad.jpg"
+    "imagen": "/assets/images/uploads/asad-1.jpg"
   },
   {
     "id": 15,
@@ -660,11 +660,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/LATTAFA/BOURBON/lattafa-bourbon.jpg",
+      "/assets/images/uploads/bourbon-1.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/LATTAFA/BOURBON/lattafa-bourbon.jpg"
+    "imagen": "/assets/images/uploads/bourbon-1.jpg"
   },
   {
     "id": 16,
@@ -701,11 +701,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/LATTAFA/ART-OF-UNIVERSE/lattafa-aou.jpg",
+      "/assets/images/uploads/art-of-universe-1.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/LATTAFA/ART-OF-UNIVERSE/lattafa-aou.jpg"
+    "imagen": "/assets/images/uploads/art-of-universe-1.jpg"
   },
   {
     "id": 17,
@@ -744,11 +744,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/LATTAFA/QAHWA/lattafa-qahwa.jpg",
+      "/assets/images/uploads/qahwa-1.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/LATTAFA/QAHWA/lattafa-qahwa.jpg"
+    "imagen": "/assets/images/uploads/qahwa-1.jpg"
   },
   {
     "id": 18,
@@ -785,11 +785,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/LATTAFA/NEBRAS-ELIXIR/lattafa-NElixir.jpg",
+      "/assets/images/uploads/nebras-elixir-1.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/LATTAFA/NEBRAS-ELIXIR/lattafa-NElixir.jpg"
+    "imagen": "/assets/images/uploads/nebras-elixir-1.jpg"
   },
   {
     "id": 19,
@@ -826,11 +826,11 @@ export const PRODUCTOS = [
       ]
     },
     "imagenes": [
-      "/assets/images/ARMAF/YUM-YUM/armaf-yumyum.jpg",
+      "/assets/images/uploads/yum-yum-1.jpg",
       null,
       null
     ],
-    "imagen": "/assets/images/ARMAF/YUM-YUM/armaf-yumyum.jpg"
+    "imagen": "/assets/images/uploads/yum-yum-1.jpg"
   }
 ];
 

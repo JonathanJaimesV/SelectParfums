@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { WHATSAPP_NUMBER } from "./config";
 
 export const formatPrice = (v) => (v == null ? "Consultar" : "$" + v.toLocaleString("es-CO"));
@@ -25,3 +25,25 @@ export const galleryOf = (p) => {
 export const slugify = (s) =>
   s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 export const perfumeSlug = (p) => p.slug || slugify(p.nombre);
+
+/** Formatos de compra de un perfume: decants de 5 y 10 ml + frasco completo. */
+export const sizeOptions = (p) => [
+  { key: "5", type: "Decant", size: "5 ml", short: "5 ml", label: "Decant 5 ml", price: p.precioDecant5 },
+  { key: "10", type: "Decant", size: "10 ml", short: "10 ml", label: "Decant 10 ml", price: p.precioDecant10 },
+  { key: "full", type: "Frasco", size: p.tamanoFrasco, short: "Frasco", label: `Frasco ${p.tamanoFrasco}`, price: p.precioFrasco },
+];
+/** Formato inicial: el más pequeño que tenga precio (si ninguno, el frasco). */
+export const defaultSizeKey = (p) => (sizeOptions(p).find((o) => o.price != null) || { key: "full" }).key;
+
+/** Hook para `matchMedia` (p. ej. cambiar acordeón ↔ tarjetas según el ancho). */
+export const useMediaQuery = (query) => {
+  const [matches, setMatches] = useState(() => typeof window !== "undefined" && window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const on = () => setMatches(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, [query]);
+  return matches;
+};

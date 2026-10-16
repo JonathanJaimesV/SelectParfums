@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
 import ProductCard from "../components/ProductCard.jsx";
-import { SearchIcon } from "../components/Icons.jsx";
+import { Icon, SearchIcon } from "../components/Icons.jsx";
 import { useCatalog } from "../context/CatalogContext.jsx";
 import { useTitle } from "../utils";
 
@@ -22,6 +22,11 @@ export default function Catalog() {
   const [search, setSearch] = useState("");
   const [availability, setAvailability] = useState("");
   const [sort, setSort] = useState("");
+  const [showFilters, setShowFilters] = useState(false); // solo afecta al móvil: en ≥768px los filtros siempre se ven
+  const searchRef = useRef(null);
+  const { hash } = useLocation();
+  // El icono de búsqueda del header enlaza a /catalogo#buscar: enfoca el campo
+  useEffect(() => { if (hash === "#buscar") searchRef.current?.focus(); }, [hash]);
 
   const catParam = params.get("cat") || "";
   const cat = CATS.find((c) => c.toLowerCase() === catParam.toLowerCase()) || "Todos";
@@ -44,6 +49,7 @@ export default function Catalog() {
     return SORTS[sort] ? [...r].sort(SORTS[sort]) : r;
   }, [PRODUCTOS, search, cat, brand, availability, sort]);
 
+  const activeFilters = [brand, availability, sort].filter(Boolean).length;
   const hasFilters = search || cat !== "Todos" || brand || availability || sort;
   const clear = () => {
     setSearch(""); setAvailability(""); setSort("");
@@ -56,37 +62,46 @@ export default function Catalog() {
         subtitle="Encuentra tu fragancia ideal. Elige entre frascos completos o decants de 5 ml y 10 ml listos para entrega inmediata o preventa." />
       <section className="catalog-section" id="catalogo" style={{ paddingTop: 0 }}>
         <div className="container">
-          <div className="catalog-bar">
-            <div className="catalog-search">
-              <SearchIcon />
-              <input type="search" className="catalog-search__input" placeholder="Buscar por nombre, marca o nota aromática…"
-                aria-label="Buscar fragancias" value={search} onChange={(e) => setSearch(e.target.value)} />
+          <div className="catalog-toolbar">
+            <div className="catalog-bar">
+              <div className="catalog-search" id="buscar">
+                <div className="catalog-search__wrap">
+                  <SearchIcon />
+                  <input ref={searchRef} type="search" className="catalog-search__input" placeholder="Buscar fragancia o marca…"
+                    aria-label="Buscar fragancias" enterKeyHint="search" value={search} onChange={(e) => setSearch(e.target.value)} />
+                </div>
+                <button type="button" className="catalog-filter-toggle" aria-label="Filtros" aria-expanded={showFilters} aria-controls="catalogFilters"
+                  onClick={() => setShowFilters((v) => !v)}>
+                  <Icon name="sliders" /> <span className="catalog-filter-toggle__text">Filtros</span>
+                  {activeFilters > 0 && <span className="catalog-filter-toggle__count">{activeFilters}</span>}
+                </button>
+              </div>
+              <div className="catalog-chips" role="group" aria-label="Filtrar por categoría">
+                {CATS.map((c) => (
+                  <button key={c} className={`catalog-chip${c === cat ? " is-active" : ""}`} aria-pressed={c === cat} onClick={() => setParam("cat", c)}>{c}</button>
+                ))}
+              </div>
             </div>
-            <div className="catalog-chips" role="group" aria-label="Filtrar por categoría">
-              {CATS.map((c) => (
-                <button key={c} className={`catalog-chip${c === cat ? " is-active" : ""}`} onClick={() => setParam("cat", c)}>{c}</button>
-              ))}
-            </div>
-          </div>
 
-          <div className="catalog-filters">
-            <select aria-label="Filtrar por marca" value={brand} onChange={(e) => setParam("marca", e.target.value)}>
-              <option value="">Todas las marcas</option>
-              {brands.map((b) => <option key={b} value={b}>{b}</option>)}
-            </select>
-            <select aria-label="Filtrar por disponibilidad" value={availability} onChange={(e) => setAvailability(e.target.value)}>
-              <option value="">Disponibilidad</option>
-              <option value="Preventa">Preventa</option>
-              <option value="Disponible">Disponible</option>
-              <option value="Agotado">Agotado</option>
-            </select>
-            <select aria-label="Ordenar por" value={sort} onChange={(e) => setSort(e.target.value)}>
-              <option value="">Ordenar por</option>
-              <option value="price-asc">Precio: menor a mayor</option>
-              <option value="price-desc">Precio: mayor a menor</option>
-              <option value="name-asc">Nombre: A – Z</option>
-              <option value="name-desc">Nombre: Z – A</option>
-            </select>
+            <div className={`catalog-filters${showFilters ? " is-open" : ""}`} id="catalogFilters">
+              <select aria-label="Filtrar por marca" value={brand} onChange={(e) => setParam("marca", e.target.value)}>
+                <option value="">Todas las marcas</option>
+                {brands.map((b) => <option key={b} value={b}>{b}</option>)}
+              </select>
+              <select aria-label="Filtrar por disponibilidad" value={availability} onChange={(e) => setAvailability(e.target.value)}>
+                <option value="">Disponibilidad</option>
+                <option value="Preventa">Preventa</option>
+                <option value="Disponible">Disponible</option>
+                <option value="Agotado">Agotado</option>
+              </select>
+              <select aria-label="Ordenar por" value={sort} onChange={(e) => setSort(e.target.value)}>
+                <option value="">Ordenar por</option>
+                <option value="price-asc">Precio: menor a mayor</option>
+                <option value="price-desc">Precio: mayor a menor</option>
+                <option value="name-asc">Nombre: A – Z</option>
+                <option value="name-desc">Nombre: Z – A</option>
+              </select>
+            </div>
           </div>
 
           <div className="catalog-meta">
@@ -98,7 +113,7 @@ export default function Catalog() {
             <div className="products-grid">{list.map((p) => <ProductCard key={p.id} p={p} />)}</div>
           )}
           <div className={`catalog-empty${list.length === 0 ? " is-visible" : ""}`}>
-            <p className="catalog-empty__icon">🔍</p>
+            <p className="catalog-empty__icon"><SearchIcon /></p>
             <h3 className="catalog-empty__title">No encontramos fragancias con esos filtros</h3>
             <p className="catalog-empty__text">Intenta con otros términos de búsqueda o haz clic en limpiar filtros.</p>
           </div>

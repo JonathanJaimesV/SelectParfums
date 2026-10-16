@@ -88,6 +88,7 @@ const IMAGE_ALIASES = {
   "/assets/images/uploads/qahwa-1.jpg": "/assets/images/LATTAFA/QAHWA/lattafa-qahwa.jpg",
   "/assets/images/uploads/nebras-elixir-1.jpg": "/assets/images/LATTAFA/NEBRAS-ELIXIR/lattafa-NElixir.jpg",
   "/assets/images/uploads/yum-yum-1.jpg": "/assets/images/ARMAF/YUM-YUM/armaf-yumyum.jpg",
+  
 };
 
 export const resolveImagePath = (src) => {

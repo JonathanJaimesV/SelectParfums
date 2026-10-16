@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
+import { Icon } from "../components/Icons.jsx";
 import ProductCard from "../components/ProductCard.jsx";
 import { useCatalog } from "../context/CatalogContext.jsx";
 import { useTitle } from "../utils";
 
 const HUBS = [
-  ["/catalogo", "✨", "Catálogo Completo", "Explora todas nuestras fragancias con filtros por notas, marcas y precios.", "Ver catálogo"],
-  ["/marcas", "🏛️", "Nuestras Casas", "Afnan, Armaf, French Avenue y Rasasi: el legado y prestigio oriental.", "Conocer marcas"],
-  ["/decants", "🧪", "¿Qué es un Decant?", "Conoce los formatos de 5 ml y 10 ml y aprende a probar antes de comprar.", "Descubrir decants"],
-  ["/como-pedir", "📦", "Cómo Pedir", "Proceso en 3 pasos, pagos por llave NU/Transferencia y envíos a Cúcuta y Bogotá.", "Guía de compra"],
+  ["/catalogo", "sparkle", "Catálogo Completo", "Explora todas nuestras fragancias con filtros por notas, marcas y precios.", "Ver catálogo"],
+  ["/marcas", "gem", "Nuestras Casas", "Afnan, Armaf, French Avenue y Rasasi: el legado y prestigio oriental.", "Conocer marcas"],
+  ["/decants", "flask", "¿Qué es un Decant?", "Conoce los formatos de 5 ml y 10 ml y aprende a probar antes de comprar.", "Descubrir decants"],
+  ["/como-pedir", "box", "Cómo Pedir", "Proceso en 3 pasos, pagos por llave NU/Transferencia y envíos a Cúcuta y Bogotá.", "Guía de compra"],
 ];
 
 export default function Home() {
@@ -31,15 +32,15 @@ export default function Home() {
           </div>
           <div className="hero__visual" aria-hidden="true">
             <svg className="hero__bottle" viewBox="0 0 200 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="72" y="10" width="56" height="50" rx="6" fill="rgba(212,175,106,0.15)" stroke="#d4af6a" strokeWidth="1.5" />
-              <rect x="88" y="0" width="24" height="16" rx="4" fill="rgba(212,175,106,0.25)" stroke="#d4af6a" strokeWidth="1" />
-              <rect x="85" y="60" width="30" height="30" rx="2" fill="rgba(212,175,106,0.08)" stroke="#d4af6a" strokeWidth="1" />
-              <rect x="35" y="90" width="130" height="200" rx="16" fill="rgba(212,175,106,0.06)" stroke="#d4af6a" strokeWidth="1.5" />
+              <rect x="72" y="10" width="56" height="50" rx="6" fill="rgba(212,175,106,0.15)" stroke="#d4af37" strokeWidth="1.5" />
+              <rect x="88" y="0" width="24" height="16" rx="4" fill="rgba(212,175,106,0.25)" stroke="#d4af37" strokeWidth="1" />
+              <rect x="85" y="60" width="30" height="30" rx="2" fill="rgba(212,175,106,0.08)" stroke="#d4af37" strokeWidth="1" />
+              <rect x="35" y="90" width="130" height="200" rx="16" fill="rgba(212,175,106,0.06)" stroke="#d4af37" strokeWidth="1.5" />
               <rect x="42" y="160" width="116" height="123" rx="12" fill="rgba(212,175,106,0.1)" />
-              <rect x="52" y="130" width="97" height="80" rx="8" fill="rgba(212,175,106,0.05)" stroke="#d4af6a" strokeWidth="0.8" />
+              <rect x="52" y="130" width="97" height="80" rx="8" fill="rgba(212,175,106,0.05)" stroke="#d4af37" strokeWidth="0.8" />
               <image x="48" y="136" width="105" height="68" href="/assets/images/Logo.png" preserveAspectRatio="xMidYMid meet" />
               <line x1="50" y1="100" x2="50" y2="270" stroke="rgba(212,175,106,0.15)" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="100" cy="68" r="3" fill="#d4af6a" opacity="0.4" />
+              <circle cx="100" cy="68" r="3" fill="#d4af37" opacity="0.4" />
             </svg>
           </div>
         </div>
@@ -51,7 +52,7 @@ export default function Home() {
             {HUBS.map(([to, icon, title, desc, cta]) => (
               <Reveal as={Link} key={to} to={to} className="hub-card">
                 <div>
-                  <div className="hub-card__icon">{icon}</div>
+                  <div className="hub-card__icon"><Icon name={icon} /></div>
                   <h2 className="hub-card__title">{title}</h2>
                   <p className="hub-card__desc">{desc}</p>
                 </div>
@@ -70,9 +71,9 @@ export default function Home() {
             <p className="section-subtitle">Las creaciones más cotizadas y reconocidas de nuestro catálogo.</p>
           </Reveal>
           <div className="products-grid">
-            {PRODUCTOS.slice(0, 4).map((p) => <ProductCard key={p.id} p={p} />)}
+            {PRODUCTOS.slice(3, 8).map((p) => <ProductCard key={p.id} p={p} />)}
           </div>
-          <div style={{ textAlign: "center", marginTop: 48 }}>
+          <div style={{ textAlign: "center", marginTop: 40 }}>
             <Link to="/catalogo" className="btn-gold">Explorar todas las fragancias</Link>
           </div>
         </div>

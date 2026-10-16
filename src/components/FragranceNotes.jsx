@@ -1,4 +1,6 @@
 import { getNoteInfo } from "../data/notes";
+import { useMediaQuery } from "../utils";
+import Accordion from "./Accordion.jsx";
 
 const STAGES = [
   {
@@ -21,8 +23,40 @@ const STAGES = [
   },
 ];
 
+function NoteList({ list }) {
+  if (list.length === 0) return <p className="fragrance-notes__empty">Notas próximamente</p>;
+  return (
+    <ul className="fragrance-notes__list">
+      {list.map((rawNote, idx) => {
+        const info = getNoteInfo(rawNote);
+        return (
+          <li key={`${info.name}-${idx}`} className="fragrance-notes__item">
+            <span className="fragrance-notes__icon-wrap">
+              {info.icon ? (
+                <img
+                  src={info.icon}
+                  alt={info.name}
+                  className="fragrance-notes__icon-img"
+                  onError={(e) => { e.currentTarget.style.display = "none"; }}
+                />
+              ) : (
+                <span className="fragrance-notes__icon-emoji">{info.emoji}</span>
+              )}
+            </span>
+            <span className="fragrance-notes__name">{info.name}</span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
 export default function FragranceNotes({ notes, perfumeName }) {
+  // Escritorio: 3 tarjetas con foto. Móvil/tablet: acordeón (sin scroll interminable).
+  const wide = useMediaQuery("(min-width: 960px)");
   if (!notes) return null;
+
+  const imgAlt = (stage) => `${stage.alt}${perfumeName ? ` de ${perfumeName}` : ""}`;
 
   return (
     <section className="fragrance-notes-section" id="notas-olfativas" aria-label="Notas olfativas">
@@ -35,58 +69,38 @@ export default function FragranceNotes({ notes, perfumeName }) {
           </p>
         </div>
 
-        <div className="fragrance-notes__grid">
-          {STAGES.map((stage) => {
-            const list = notes[stage.key] || [];
-            return (
+        {wide ? (
+          <div className="fragrance-notes__grid">
+            {STAGES.map((stage) => (
               <div key={stage.key} className="fragrance-notes__card">
                 <div className="fragrance-notes__card-media">
-                  <img
-                    src={stage.image}
-                    alt={`${stage.alt}${perfumeName ? ` de ${perfumeName}` : ""}`}
-                    loading="lazy"
-                    className="fragrance-notes__card-img"
-                  />
+                  <img src={stage.image} alt={imgAlt(stage)} loading="lazy" className="fragrance-notes__card-img" />
                 </div>
                 <div className="fragrance-notes__card-body">
                   <h3 className="fragrance-notes__card-title">{stage.title}</h3>
                   <div className="fragrance-notes__card-divider" />
-                  {list.length > 0 ? (
-                    <ul className="fragrance-notes__list">
-                      {list.map((rawNote, idx) => {
-                        const info = getNoteInfo(rawNote);
-                        return (
-                          <li
-                            key={`${info.name}-${idx}`}
-                            className="fragrance-notes__item"
-                          >
-                            <span className="fragrance-notes__icon-wrap">
-                              {info.icon ? (
-                                <img
-                                  src={info.icon}
-                                  alt={info.name}
-                                  className="fragrance-notes__icon-img"
-                                  onError={(e) => {
-                                    e.currentTarget.style.display = "none";
-                                  }}
-                                />
-                              ) : (
-                                <span className="fragrance-notes__icon-emoji">{info.emoji}</span>
-                              )}
-                            </span>
-                            <span className="fragrance-notes__name">{info.name}</span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  ) : (
-                    <p className="fragrance-notes__empty">Notas próximamente</p>
-                  )}
+                  <NoteList list={notes[stage.key] || []} />
                 </div>
               </div>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="fragrance-notes__acc">
+            <Accordion
+              defaultOpen={["salida"]}
+              items={STAGES.map((stage) => {
+                const list = notes[stage.key] || [];
+                return {
+                  id: stage.key,
+                  title: stage.title,
+                  meta: list.length ? String(list.length) : undefined,
+                  media: <img src={stage.image} alt="" loading="lazy" />,
+                  content: <NoteList list={list} />,
+                };
+              })}
+            />
+          </div>
+        )}
       </div>
     </section>
   );

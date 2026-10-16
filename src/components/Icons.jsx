@@ -14,3 +14,28 @@ export const DecantIcon = ({ d, rect }) => (
     <path d={d} /><rect {...rect} rx="2" /><line x1="12" y1="5" x2="12" y2="2" />
   </svg>
 );
+
+/* Iconos de línea fina (reemplazan a los emojis para una estética más sobria) */
+const PATHS = {
+  home: <><path d="M3 11l9-8 9 8" /><path d="M5 10v10h14V10" /><path d="M10 20v-6h4v6" /></>,
+  grid: <><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></>,
+  gem: <><path d="M6 3h12l4 6-10 12L2 9z" /><path d="M2 9h20" /><path d="M9 3l3 6 3-6" /><path d="M12 9v12" /></>,
+  sparkle: <><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" /><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z" /></>,
+  flask: <><path d="M9 2h6" /><path d="M10 2v6L4.5 19a2 2 0 0 0 1.8 3h11.4a2 2 0 0 0 1.8-3L14 8V2" /><path d="M7.5 15h9" /></>,
+  box: <><path d="M21 8l-9-5-9 5v8l9 5 9-5z" /><path d="M3 8l9 5 9-5" /><path d="M12 13v8" /></>,
+  phone: <><rect x="7" y="2" width="10" height="20" rx="2.5" /><path d="M11 18h2" /></>,
+  bank: <><path d="M3 9l9-6 9 6" /><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8" /><path d="M3 21h18" /></>,
+  truck: <><path d="M2 6h11v10H2z" /><path d="M13 9h4l4 3v4h-8z" /><circle cx="6.5" cy="18" r="1.8" /><circle cx="17.5" cy="18" r="1.8" /></>,
+  chevron: <path d="M6 9l6 6 6-6" />,
+  left: <path d="M15 6l-6 6 6 6" />,
+  right: <path d="M9 6l6 6-6 6" />,
+  close: <path d="M6 6l12 12M18 6L6 18" />,
+  search: <><circle cx="11" cy="11" r="7.5" /><path d="M21 21l-4.6-4.6" /></>,
+  sliders: <><path d="M4 6h8M18 6h2M4 12h2M12 12h8M4 18h10M20 18h0" /><circle cx="15" cy="6" r="2" /><circle cx="9" cy="12" r="2" /><circle cx="17" cy="18" r="2" /></>,
+  bottle: <><rect x="9" y="2" width="6" height="4" rx="1" /><path d="M8 6h8v3a3 3 0 0 1 3 3v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-8a3 3 0 0 1 3-3z" /></>,
+};
+export const Icon = ({ name, className = "icon" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {PATHS[name]}
+  </svg>
+);
