@@ -70,7 +70,7 @@
 @keyframes showcaseIn { from { opacity: 0; transform: translate3d(0, 12px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
 
 .showcase__brand { display: flex; align-items: center; gap: 14px; margin: 0 0 14px; font-size: 0.7rem; font-weight: 600; letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); }
-.showcase__badge { padding: 3px 10px; border: 1px solid var(--ivory-line); border-radius: var(--radius-btn); font-size: 0.62rem; letter-spacing: 0.14em; color: var(--ivory); }
+.showcase__badge { padding: 3px 10px; border: 1px solid var(--ivory-line); border-radius: var(--radius-tag); font-size: 0.62rem; letter-spacing: 0.14em; color: var(--ivory); }
 .showcase__name { margin: 0 0 18px; font-family: var(--font-heading); font-size: clamp(2.3rem, 4vw, 3.5rem); font-weight: 500; line-height: 1.04; letter-spacing: -0.01em; }
 .showcase__name a { color: inherit; transition: color var(--transition); }
 .showcase__name a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
@@ -95,6 +95,27 @@
 
 .showcase__actions { display: grid; gap: 6px; justify-items: start; }
 .showcase .cart-add--showcase { width: 100%; max-width: 400px; min-height: 54px; font-size: 0.78rem; }
+
+/* ── Móvil (<640px): prioridad a imagen, marca, nombre, precio y acción ──────────────────────────
+   La descripción, el subtítulo, el contador y los textos bajo las miniaturas se ocultan solo aquí;
+   siguen en el DOM y se muestran desde 640px, y la ficha del producto conserva toda la información. */
+@media (max-width: 639px) {
+  .showcase__head { margin-bottom: 24px; }
+  .showcase__intro .section-subtitle, .showcase__desc, .showcase__count { display: none; }
+  .showcase__controls { justify-content: flex-end; bottom: 10px; }
+  .showcase__arrow { width: 40px; height: 40px; }
+  .showcase__index { gap: 10px; margin-top: 14px; }
+  .showcase__index li { flex-basis: 64px; }
+  .showcase__item-brand, .showcase__item-name, .showcase__item-price { display: none; }
+  .showcase__thumb { margin-bottom: 0; }
+  .showcase__grid { gap: 20px; }
+  .showcase__brand { margin-bottom: 8px; }
+  .showcase__name { margin-bottom: 14px; font-size: clamp(1.9rem, 8vw, 2.3rem); }
+  .showcase__buy { padding-top: 14px; }
+  .showcase__price { margin: 4px 0 16px; }
+  .showcase__price-value { font-size: 1.7rem; }
+  .showcase .cart-add--showcase { max-width: none; min-height: 50px; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .showcase__panel > * { animation: none; }

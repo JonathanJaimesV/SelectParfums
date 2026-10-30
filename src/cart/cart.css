@@ -5,7 +5,7 @@
 /* Icono del encabezado + contador */
 .cart-link { position: relative; }
 .cart-link__badge {
-  position: absolute; top: 4px; right: 2px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: var(--radius-btn);
+  position: absolute; top: 4px; right: 2px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px;
   background: var(--gold); color: var(--text-on-gold); font-size: 0.68rem; font-weight: 700; line-height: 18px; text-align: center;
 }
 
@@ -76,7 +76,7 @@
 .cart-line__main { grid-area: main; min-width: 0; }
 .cart-line__name { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; line-height: 1.2; color: var(--text-primary); }
 .cart-line__pres { margin-top: 4px; font-size: 0.84rem; color: var(--text-secondary); }
-.cart-line__tag { margin-left: 8px; padding: 2px 8px; border: 1px solid var(--gold-line); border-radius: var(--radius-btn); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
+.cart-line__tag { margin-left: 8px; padding: 2px 8px; border: 1px solid var(--gold-line); border-radius: var(--radius-tag); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
 .cart-line__unit { margin-top: 4px; font-size: 0.84rem; color: var(--color-price); }
 .cart-line__problem { margin-top: 6px; font-size: 0.82rem; color: #e39a82; }
 .cart-line__controls { grid-area: ctl; display: flex; align-items: center; justify-content: space-between; gap: 12px; }

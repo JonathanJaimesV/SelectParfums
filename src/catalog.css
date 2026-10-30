@@ -25,8 +25,9 @@
 .cat-block__title { display: block; margin: 0 0 12px; font-family: var(--font-body); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
 
 .cat-search { position: relative; }
-.cat-search .catalog-search__icon { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--text-secondary); pointer-events: none; }
-.cat-search__input { width: 100%; min-height: 44px; padding: 8px 0 8px 28px; background: transparent; border: 0; border-bottom: 1px solid rgba(240, 232, 218, 0.22); color: var(--ivory); font-size: 0.95rem; border-radius: 0; }
+.cat-search .catalog-search__icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--text-secondary); pointer-events: none; }
+.cat-search__input { width: 100%; min-height: 44px; padding: 8px 14px 8px 42px; background: var(--ivory-dim); border: 1px solid rgba(240, 232, 218, 0.22); color: var(--ivory); font-size: 1rem; border-radius: var(--radius-btn); transition: border-color var(--transition), background var(--transition); }
+.cat-search__input:focus-visible { border-color: var(--gold); background: rgba(240, 235, 224, 0.09); }
 .cat-search__input::placeholder { color: var(--text-secondary); opacity: 0.8; }
 .cat-search__input:focus { outline: none; border-bottom-color: var(--gold); }
 
@@ -74,19 +75,19 @@
 .cat-count { margin: 0; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); white-space: nowrap; }
 .cat-count span { color: var(--ivory); font-weight: 600; }
 .cat-chips { flex: 1; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; min-width: 0; }
-.cat-chip { display: inline-flex; align-items: center; gap: 4px; padding: 0 4px 0 12px; min-height: 34px; border: 1px solid rgba(240, 232, 218, 0.3); border-radius: 2px; font-size: 0.8rem; color: var(--ivory); }
+.cat-chip { display: inline-flex; align-items: center; gap: 4px; padding: 0 4px 0 12px; min-height: 34px; border: 1px solid rgba(240, 232, 218, 0.3); border-radius: var(--radius-btn); font-size: 0.8rem; color: var(--ivory); }
 .cat-chip button { width: 28px; height: 28px; display: grid; place-items: center; color: var(--ivory); }
 .cat-chip button .icon { width: 13px; height: 13px; }
 .cat-chip button:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
 .cat-sort { margin-left: auto; }
 .cat-sort select {
-  appearance: none; -webkit-appearance: none; color-scheme: dark; min-height: 40px; padding: 0 38px 0 14px; border: 1px solid rgba(240, 232, 218, 0.3); border-radius: 2px;
+  appearance: none; -webkit-appearance: none; color-scheme: dark; min-height: 40px; padding: 0 38px 0 14px; border: 1px solid rgba(240, 232, 218, 0.3); border-radius: var(--radius-btn);
   background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23f2ebdd' stroke-width='1.6'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 14px center;
   color: var(--ivory); font-size: 0.82rem; cursor: pointer;
 }
 .cat-sort select option { background: #14110f; color: #f2ebdd; }
 .cat-sort select:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.cat-filtbtn { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border: 1px solid rgba(240, 232, 218, 0.4); border-radius: 2px; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--ivory); }
+.cat-filtbtn { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border: 1px solid rgba(240, 232, 218, 0.4); border-radius: var(--radius-btn); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--ivory); }
 .cat-filtbtn .icon { width: 16px; height: 16px; }
 .cat-filtbtn__count { display: grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 9px; background: var(--gold); color: var(--text-on-gold); font-size: 0.66rem; }
 .cat-filtbtn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }

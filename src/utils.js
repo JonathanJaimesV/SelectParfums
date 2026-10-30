@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { WHATSAPP_NUMBER, SITE_URL } from "./config";
+import { WHATSAPP_NUMBER } from "./config";
 import { IMAGE_MANIFEST } from "./data/imageManifest";
-import { formatPrice, sizeOptions, defaultSizeKey, isSoldOut, isValidPrice } from "./pricing";
+import { formatPrice, sizeOptions, defaultSizeKey, isSoldOut } from "./pricing";
 
 // Formato y reglas de precio centralizados en ./pricing (se reexportan para no romper imports existentes)
 export { formatPrice, sizeOptions, defaultSizeKey, isSoldOut };
 
 export const waUrl = (msg) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 export const WA_GENERIC = waUrl("Hola, estoy interesado en sus fragancias de SelectParfums. ¿Me pueden ayudar?");
-export const useTitle = (t) => useEffect(() => { document.title = t; }, [t]);
 
 /**
  * Fotos del carrusel: principal + hasta 2 adicionales (máx. 3).
@@ -87,5 +86,3 @@ export { normalize, searchText, matchesQuery, entryPrice } from "./catalogQuery.
 
 /* ───────── URLs y mensajes ───────── */
 export const perfumePath = (p) => `/perfume/${perfumeSlug(p)}`;
-export const perfumeAbsUrl = (p) => `${SITE_URL}${perfumePath(p)}`;
-export const absUrl = (path) => (/^https?:/.test(path) ? path : `${SITE_URL}${path}`);

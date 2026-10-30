@@ -17,7 +17,7 @@ const SORT_LABELS = [
   ["name-asc", "Nombre: A – Z"],
   ["name-desc", "Nombre: Z – A"],
 ];
-const BANNER_IMG = "/assets/images/hero/hero-campaign.png";
+const BANNER_IMG = "/assets/images/hero/hero-campaign.webp";
 
 /** Opción de filtro de selección única: mismo efecto que el chip / la lista desplegable anterior. */
 function Opt({ on, onClick, count, children, logo, brand }) {
@@ -143,7 +143,7 @@ export default function Catalog() {
       {/* ── Resultados ── */}
       <div className="cat-main">
         <header className="cat-hero">
-          {showBanner && <img className="cat-hero__img" src={BANNER_IMG} alt="" width="1672" height="940" decoding="async" />}
+          {showBanner && <img className="cat-hero__img" src={BANNER_IMG} alt="" width="1672" height="940" loading="lazy" decoding="async" />}
           <div className="cat-hero__copy">
             <nav className="cat-crumb" aria-label="Migas de pan"><Link to="/">Inicio</Link><span aria-hidden="true">/</span><span aria-current="page">Catálogo</span></nav>
             <p className="cat-hero__label">Catálogo de fragancias</p>

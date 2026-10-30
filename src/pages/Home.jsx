@@ -10,8 +10,10 @@ import { isSoldOut } from "../utils";
 import "../hero.css";
 
 // Fotografía de campaña del hero (recurso estático en /public).
-const HERO_IMAGE = "/assets/images/hero/hero-campaign.png";          // 1672 px
-const HERO_IMAGE_2X = "/assets/images/hero/hero-campaign-2x.png";    // 3344 px (pantallas grandes / retina)
+// WebP generado desde los PNG originales (que se conservan en la carpeta como fuente): 828 px (móvil), 1672 px y 3344 px (retina).
+const HERO_IMAGE = "/assets/images/hero/hero-campaign.webp";
+const HERO_IMAGE_SM = "/assets/images/hero/hero-campaign-828.webp";
+const HERO_IMAGE_2X = "/assets/images/hero/hero-campaign-2x.webp";
 
 const TRUST_ITEMS = [
   ["flask", "Fragancias Originales", "Decants trasvasados de frascos auténticos con atomizadores de calidad."],
@@ -39,7 +41,7 @@ export default function Home() {
             <img
               className="cine-hero__img"
               src={HERO_IMAGE}
-              srcSet={`${HERO_IMAGE} 1672w, ${HERO_IMAGE_2X} 3344w`}
+              srcSet={`${HERO_IMAGE_SM} 828w, ${HERO_IMAGE} 1672w, ${HERO_IMAGE_2X} 3344w`}
               sizes="100vw"
               alt=""
               width="1672" height="940"

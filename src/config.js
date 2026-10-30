@@ -10,5 +10,3 @@ export const WHATSAPP_NUMBER = String(import.meta.env.VITE_WHATSAPP_NUMBER || "5
 export const SITE_URL = "https://selectparfumscol.netlify.app";
 export const SITE_NAME = "SelectParfums Colombia";
 
-// Perfume que aparece en la portada (slug). Si no existe o no tiene imagen, se usa el primer destacado.
-export const HERO_SLUG = "club-de-nuit-intense-man-edt";

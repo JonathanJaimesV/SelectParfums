@@ -145,6 +145,16 @@
 /* Móviles: sin deriva continua (ahorra batería y GPU) */
 @media (max-width: 700px) { .cine-hero__media { animation: none; } }
 
+/* Móviles: la entrada del texto y los botones llega en ~1 s en lugar de ~3 s, para que la primera pantalla sea útil enseguida */
+@media (max-width: 700px) {
+  .cine-hero__eyebrow, .cine-hero__eyebrow::before { animation-delay: 0.2s; }
+  .cine-hero__line:nth-child(1) > span { animation-delay: 0.3s; }
+  .cine-hero__line:nth-child(2) > span { animation-delay: 0.4s; }
+  .cine-hero__text { animation-delay: 0.55s; }
+  .cine-hero__actions > :nth-child(1) { animation-delay: 0.7s; }
+  .cine-hero__actions > :nth-child(2) { animation-delay: 0.8s; }
+}
+
 /* Movimiento reducido: sin animaciones; todo en su estado final */
 @media (prefers-reduced-motion: reduce) {
   .cine-hero *, .cine-hero *::before, .cine-hero *::after { animation: none !important; }
