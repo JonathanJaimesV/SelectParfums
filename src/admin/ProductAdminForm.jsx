@@ -3,7 +3,7 @@ import Modal from "./Modal.jsx";
 import BrandModal from "./BrandModal.jsx";
 import NoteMultiSelect from "./NoteMultiSelect.jsx";
 import ImageManager from "./ImageManager.jsx";
-import { galleryOf } from "../utils";
+import { explicitGallery } from "../utils";
 import { ESTADOS, GENEROS, NOTE_STAGES, generosOf, isDuplicateName, normalizeGeneros } from "../services/catalogService";
 
 const NEW_BRAND = "__new__";
@@ -18,7 +18,7 @@ const emptyDraft = {
 const toDraft = (p) => ({
   ...emptyDraft, ...p,
   generos: generosOf(p),
-  imagenes: galleryOf(p),
+  imagenes: explicitGallery(p),
   precioFrasco: p.precioFrasco ?? "", precioDecant5: p.precioDecant5 ?? "", precioDecant10: p.precioDecant10 ?? "",
   notas: { salida: [...(p.notas?.salida || [])], corazon: [...(p.notas?.corazon || [])], fondo: [...(p.notas?.fondo || [])] },
 });
@@ -103,7 +103,7 @@ export default function ProductAdminForm({ product, productos, marcas, notasDisp
                   <select id="f-marca" className="adm-input" value={d.marca} onChange={(e) => onBrandChange(e.target.value)} data-autofocus>
                     <option value="">Selecciona una marca…</option>
                     {marcas.map((m) => <option key={m.id} value={m.nombre}>{m.nombre}</option>)}
-                    <option value={NEW_BRAND}>＋ Crear nueva marca…</option>
+                    <option value={NEW_BRAND}>+ Crear nueva marca…</option>
                   </select>
                   {errors.marca && <p className="adm-error" role="alert">{errors.marca}</p>}
                 </div>

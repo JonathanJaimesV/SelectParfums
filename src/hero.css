@@ -1,0 +1,151 @@
+/* ═══════════════════════════════════════════════════════════
+   hero.css — Hero cinematográfico de la portada
+   Solo afecta a las clases .cine-hero*. Los estados base son el estado FINAL:
+   las animaciones usan fill-mode "backwards", así que sin animación (movimiento
+   reducido, CSS que falle) todo queda visible y en su lugar.
+   Composición: fotografía a todo el ancho bajo el header que se funde con el
+   fondo obsidiana; el titular nace sobre ese fundido y el texto queda debajo.
+   ═══════════════════════════════════════════════════════════ */
+
+.cine-hero {
+  --cine-obsidian: #10100f;
+  --cine-ivory: #f2ebdd;
+  --cine-champagne: #c6ad82;
+  --cine-champagne-hover: #d4bf99;
+  --cine-bronze: #806647;
+  --cine-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  position: relative; isolation: isolate; overflow: hidden;
+  padding: calc(var(--header-h) + var(--safe-t)) 0 48px;
+  background: var(--cine-obsidian); color: var(--cine-ivory);
+  border-bottom: 1px solid rgba(198, 173, 130, 0.16);
+}
+@media (min-width: 900px) { .cine-hero { padding-bottom: 48px; } }
+
+/* ── Escenario: luz, fotografía y sombras ─────────────────── */
+.cine-hero__stage {
+  position: relative; z-index: 0; overflow: hidden; pointer-events: none;
+  height: clamp(300px, 47svh, 460px);
+}
+@media (min-width: 900px) {
+  .cine-hero__stage {
+    height: min(calc(100svh - var(--header-h) - var(--safe-t) - 150px), 56.25vw);
+    min-height: 420px;
+  }
+}
+
+.cine-hero__light {
+  position: absolute; inset: -8%;
+  background:
+    radial-gradient(52% 52% at 72% 40%, rgba(198, 173, 130, 0.22), transparent 70%),
+    radial-gradient(70% 55% at 8% 100%, rgba(128, 102, 71, 0.16), transparent 72%);
+  animation: cineFade 1.6s ease-out backwards;
+}
+
+/* Deriva ambiental muy lenta: solo transform, en una capa propia */
+.cine-hero__media {
+  position: absolute; inset: 0;
+  animation: cineDrift 60s ease-in-out 2.4s infinite alternate;
+}
+.cine-hero__img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover; object-position: 62% 50%;
+  opacity: 0;
+}
+@media (min-width: 900px) { .cine-hero__img { object-position: 50% 52%; } }
+.cine-hero__img.is-loaded {
+  opacity: 1;
+  animation: cineImageIn 2.4s var(--cine-ease) 0.25s backwards;
+}
+
+/* Fundido: abajo hacia el obsidiana (de ahí nace el titular), arriba hacia el header, bordes suaves */
+.cine-hero__shade {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(0deg, var(--cine-obsidian) 0%, rgba(16, 16, 15, 0.86) 16%, rgba(16, 16, 15, 0) 52%),
+    linear-gradient(180deg, rgba(16, 16, 15, 0.6) 0%, rgba(16, 16, 15, 0) 20%),
+    radial-gradient(120% 100% at 50% 40%, rgba(16, 16, 15, 0) 58%, rgba(16, 16, 15, 0.5) 100%);
+}
+
+/* ── Contenido ────────────────────────────────────────────── */
+.cine-hero > .cine-hero__inner { position: relative; z-index: 1; display: grid; gap: 18px; margin-top: -96px; }
+@media (min-width: 900px) { .cine-hero > .cine-hero__inner { gap: 20px; margin-top: calc(-1 * clamp(130px, 12vw, 230px)); } }
+
+.cine-hero__eyebrow {
+  display: flex; align-items: center; gap: 14px; margin: 0;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--sand);
+  animation: cineUp 1s var(--cine-ease) 0.8s backwards;
+}
+.cine-hero__eyebrow::before {
+  content: ""; flex: none; width: 44px; height: 1px; background: var(--cine-champagne);
+  transform-origin: left center;
+  animation: cineLineX 1.2s var(--cine-ease) 0.8s backwards;
+}
+
+/* Titular: cada línea se revela desde una máscara */
+.cine-hero__title {
+  margin: 0; font-family: var(--font-heading); font-weight: 500;
+  font-size: clamp(2.9rem, 13vw, 4.6rem); line-height: 1; letter-spacing: -0.02em;
+  color: var(--cine-ivory);
+}
+@media (min-width: 900px) { .cine-hero__title { font-size: clamp(3.4rem, 6.6vw, 6.6rem); } }
+.cine-hero__line { display: block; overflow: hidden; padding: 0.05em 0 0.16em; margin-bottom: -0.12em; }
+@media (min-width: 900px) { .cine-hero__line { display: inline-block; vertical-align: top; } }
+.cine-hero__line > span { display: inline-block; }
+.cine-hero__line:nth-child(1) > span { animation: cineMask 1.4s var(--cine-ease) 1s backwards; }
+.cine-hero__line:nth-child(2) > span { animation: cineMask 1.4s var(--cine-ease) 1.15s backwards; }
+.cine-hero__title .hero__title-dot { color: var(--cine-champagne); }
+
+.cine-hero__foot { display: grid; gap: 26px; margin-top: 6px; }
+@media (min-width: 900px) {
+  .cine-hero__foot { grid-template-columns: minmax(0, 46ch) auto; justify-content: space-between; align-items: end; gap: 56px; }
+}
+.cine-hero__text {
+  margin: 0; max-width: 46ch; font-size: 1.02rem; line-height: 1.75; color: rgba(242, 235, 221, 0.78);
+  animation: cineUp 1.1s var(--cine-ease) 1.7s backwards;
+}
+.cine-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.cine-hero__actions > :nth-child(1) { animation: cineUp 1s var(--cine-ease) 1.95s backwards; }
+.cine-hero__actions > :nth-child(2) { animation: cineUp 1s var(--cine-ease) 2.1s backwards; }
+@media (max-width: 480px) {
+  .cine-hero__actions { flex-direction: column; }
+  .cine-hero__actions > * { width: 100%; }
+}
+
+/* ── Microinteracciones de los botones del hero ───────────── */
+.cine-hero .btn-gold { background: var(--cine-champagne); color: #10100f; }
+.cine-hero .btn-outline { border-color: rgba(242, 235, 221, 0.34); color: var(--cine-ivory); }
+.cine-hero .btn-gold,
+.cine-hero .btn-outline {
+  transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease, transform 0.35s var(--cine-ease), box-shadow 0.35s ease;
+}
+.cine-hero__arrow { display: inline-block; transition: transform 0.35s var(--cine-ease); }
+@media (hover: hover) and (pointer: fine) {
+  .cine-hero .btn-gold:hover {
+    background: var(--cine-champagne-hover); transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(198, 173, 130, 0.18);
+  }
+  .cine-hero .btn-gold:hover .cine-hero__arrow { transform: translateX(5px); }
+  .cine-hero .btn-outline:hover { background: rgba(242, 235, 221, 0.06); border-color: var(--cine-champagne); transform: translateY(-2px); }
+}
+.cine-hero .btn-gold:active, .cine-hero .btn-outline:active { transform: translateY(0) scale(0.985); }
+.cine-hero .btn-gold:focus-visible, .cine-hero .btn-outline:focus-visible {
+  outline: 2px solid var(--cine-ivory); outline-offset: 4px;
+}
+
+/* ── Keyframes (solo transform y opacity) ─────────────────── */
+@keyframes cineFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cineDrift { from { transform: scale(1) translate3d(0, 0, 0); } to { transform: scale(1.03) translate3d(-0.6%, -0.3%, 0); } }
+@keyframes cineImageIn { from { opacity: 0; transform: scale(1.1); } to { opacity: 1; transform: scale(1); } }
+@keyframes cineMask { from { transform: translate3d(0, 108%, 0); } to { transform: translate3d(0, 0, 0); } }
+@keyframes cineUp { from { opacity: 0; transform: translate3d(0, 18px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+@keyframes cineLineX { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Móviles: sin deriva continua (ahorra batería y GPU) */
+@media (max-width: 700px) { .cine-hero__media { animation: none; } }
+
+/* Movimiento reducido: sin animaciones; todo en su estado final */
+@media (prefers-reduced-motion: reduce) {
+  .cine-hero *, .cine-hero *::before, .cine-hero *::after { animation: none !important; }
+}

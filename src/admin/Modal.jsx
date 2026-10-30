@@ -1,3 +1,4 @@
+import { Icon } from "../components/Icons.jsx";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
@@ -49,7 +50,7 @@ export default function Modal({ title, onClose, children, size = "md", locked = 
       <div ref={ref} className={`adm-modal adm-modal--${size}`} role="dialog" aria-modal="true" aria-labelledby={labelledBy} tabIndex={-1}>
         <header className="adm-modal__head">
           <h2 id={labelledBy} className="adm-modal__title">{title}</h2>
-          <button type="button" className="adm-iconbtn" onClick={onClose} aria-label="Cerrar">✕</button>
+          <button type="button" className="adm-iconbtn" onClick={onClose} aria-label="Cerrar"><Icon name="close" className="icon icon--sm" /></button>
         </header>
         {children}
       </div>

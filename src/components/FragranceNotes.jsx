@@ -32,16 +32,13 @@ function NoteList({ list }) {
         return (
           <li key={`${info.name}-${idx}`} className="fragrance-notes__item">
             <span className="fragrance-notes__icon-wrap">
-              {info.icon ? (
-                <img
-                  src={info.icon}
-                  alt={info.name}
-                  className="fragrance-notes__icon-img"
-                  onError={(e) => { e.currentTarget.style.display = "none"; }}
-                />
-              ) : (
-                <span className="fragrance-notes__icon-emoji">{info.emoji}</span>
-              )}
+              <img
+                src={info.icon}
+                alt=""
+                className="fragrance-notes__icon-img"
+                loading="lazy"
+                onError={(e) => { e.currentTarget.style.visibility = "hidden"; }}
+              />
             </span>
             <span className="fragrance-notes__name">{info.name}</span>
           </li>

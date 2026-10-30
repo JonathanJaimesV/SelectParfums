@@ -16,14 +16,14 @@
 /* ── Carrusel (scroll-snap nativo: swipe fluido sin JS de gestos) ── */
 .carousel { outline: none; }
 .carousel__viewport { position: relative; background: var(--gradient-image); overflow: hidden; }
-@media (min-width: 860px) { .carousel__viewport { border: 1px solid var(--border-card); border-radius: var(--radius-card); } }
+@media (min-width: 860px) { .carousel__viewport { border: 1px solid var(--border-card); border-radius: var(--radius-card); } .carousel__track { aspect-ratio: 4 / 3; } }
 .carousel__track {
-  display: flex; overflow-x: auto; width: 100%; aspect-ratio: 4 / 5; max-height: 78svh;
+  display: flex; overflow-x: auto; width: 100%; aspect-ratio: 3 / 2; max-height: 78svh;
   scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
 .carousel__track::-webkit-scrollbar { display: none; }
 .carousel__slide { flex: 0 0 100%; scroll-snap-align: start; scroll-snap-stop: always; display: flex; align-items: center; justify-content: center; }
-.carousel__slide img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; user-select: none; -webkit-user-drag: none; }
+.carousel__slide img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; user-select: none; -webkit-user-drag: none; }
 .carousel__placeholder {
   display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 28px; color: var(--text-secondary);
   font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; text-align: center;
@@ -33,15 +33,15 @@
 /* Flechas: solo con puntero fino (en táctil se desliza con el dedo) */
 .carousel__btn {
   position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; display: none; place-items: center;
-  border: 1px solid var(--gold-line); background: rgba(10, 10, 10, 0.7); color: var(--gold);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: background var(--transition);
+  border: 1px solid var(--ivory-line); background: rgba(14, 11, 9, 0.85); color: var(--ivory);
+  transition: background var(--transition);
 }
 .carousel__btn svg { width: 20px; height: 20px; }
 .carousel__btn--prev { left: 12px; }
 .carousel__btn--next { right: 12px; }
 @media (hover: hover) and (pointer: fine) {
   .carousel__btn { display: grid; }
-  .carousel__btn:hover { background: var(--gold-dim); }
+  .carousel__btn:hover { background: var(--ivory-dim); }
 }
 
 /* Puntos: área táctil de 44px, punto visual pequeño */
@@ -49,15 +49,17 @@
 .carousel__dot { position: relative; width: 44px; height: 36px; padding: 0; }
 .carousel__dot::before {
   content: ""; position: absolute; top: 50%; left: 50%; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%;
-  background: var(--border-card); border: 1px solid var(--gold-line); transition: width var(--transition), margin var(--transition), background var(--transition), border-radius var(--transition);
+  background: var(--border-card); border: 1px solid var(--ivory-line); transition: width var(--transition), margin var(--transition), background var(--transition), border-radius var(--transition);
 }
-.carousel__dot.is-active::before { width: 22px; margin-left: -11px; border-radius: 4px; background: var(--gold); border-color: var(--gold); }
+.carousel__dot.is-active::before { width: 22px; margin-left: -11px; border-radius: 4px; background: var(--ivory); border-color: var(--ivory); }
 
 /* ── Información ─────────────────────────────── */
-.detail__name { margin: 4px 0 14px; font-family: var(--font-heading); font-size: clamp(2.1rem, 8vw, 3rem); font-weight: 500; letter-spacing: var(--track-wide); line-height: 1.08; }
+.detail__name { margin: 4px 0 14px; font-family: var(--font-heading); font-size: clamp(2.4rem, 7vw, 4rem); font-weight: 500; letter-spacing: -0.01em; line-height: 1.02; text-wrap: balance; }
 .detail__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-.detail__tags span { padding: 6px 14px; border: 1px solid var(--border-card); border-radius: var(--radius-pill); font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); }
-.detail__tags span:last-child:not(:first-child) { border-color: var(--gold-line); color: var(--gold); }
+.detail__tags { gap: 0; }
+.detail__tags span { padding: 0; border: 0; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); }
+.detail__tags span + span::before { content: "/"; margin: 0 12px; opacity: 0.5; }
+.detail__tags span:last-child:not(:first-child) { color: var(--ivory); }
 .detail__desc { margin: 20px 0 24px; line-height: 1.8; color: var(--text-secondary); font-size: 0.96rem; }
 
 .detail__priceblock { display: flex; flex-direction: column; gap: 2px; margin-bottom: 16px; }
@@ -77,13 +79,13 @@
 .detail__cta { display: none; margin-top: 22px; }
 @media (min-width: 860px) { .detail__cta { display: flex; } }
 .detail__back { display: inline-flex; align-items: center; min-height: 44px; margin-top: 12px; color: var(--text-secondary); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; }
-.detail__back:active { color: var(--gold); }
+.detail__back:active { color: var(--ivory); }
 
 /* Barra de compra fija (móvil) */
 .buybar {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 950; display: flex; align-items: center; gap: 14px;
   padding: 12px 20px calc(12px + var(--safe-b)); border-top: 1px solid var(--border-soft);
-  background: rgba(10, 10, 10, 0.88); -webkit-backdrop-filter: blur(18px) saturate(140%); backdrop-filter: blur(18px) saturate(140%);
+  background: rgba(14, 11, 9, 0.97);
 }
 .buybar__info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
 .buybar__label { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -102,7 +104,7 @@
 .acc__media img { width: 100%; height: 100%; object-fit: cover; }
 .acc__title { flex: 1; font-family: var(--font-heading); font-size: 1.3rem; font-weight: 500; letter-spacing: var(--track-wide); }
 .acc__count { font-size: 0.7rem; letter-spacing: 0.14em; color: var(--text-secondary); }
-.acc__chev { width: 20px; height: 20px; color: var(--gold); transition: transform var(--transition); flex-shrink: 0; }
+.acc__chev { width: 20px; height: 20px; color: var(--sand); transition: transform var(--transition); flex-shrink: 0; }
 .acc__item.is-open .acc__chev { transform: rotate(180deg); }
 .acc__head:active { background: var(--gold-dim); }
 
@@ -116,12 +118,12 @@
 .acc-dl dd { color: var(--text-primary); }
 
 /* ── Notas olfativas ─────────────────────────── */
-.fragrance-notes-section { padding: 48px 0 56px; background: linear-gradient(180deg, #0f0f0f 0%, var(--bg-primary) 100%); border-top: 1px solid var(--border-card); }
+.fragrance-notes-section { padding: 48px 0 56px; background: var(--bg-elevated); border-top: 1px solid var(--border-card); }
 @media (min-width: 960px) { .fragrance-notes-section { padding: 80px 0 100px; } }
 
 .fragrance-notes__header { text-align: center; max-width: 680px; margin: 0 auto 28px; }
 @media (min-width: 960px) { .fragrance-notes__header { margin-bottom: 44px; } }
-.fragrance-notes__header .section-label { display: inline-block; }
+.fragrance-notes__header .section-label { display: none; }
 .fragrance-notes__title { font-family: var(--font-heading); font-size: clamp(2rem, 6vw, 3rem); font-weight: 500; letter-spacing: var(--track-wide); line-height: 1.15; margin: 0 0 10px; }
 .fragrance-notes__subtitle { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; }
 
@@ -129,24 +131,23 @@
 .fragrance-notes__acc { max-width: 640px; margin: 0 auto; }
 .fragrance-notes__list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .fragrance-notes__item { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 10px; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-sm); }
-.fragrance-notes__icon-wrap { width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
-.fragrance-notes__icon-img { max-width: 28px; max-height: 28px; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5)); }
-.fragrance-notes__icon-emoji { font-size: 1.1rem; line-height: 1; display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 8px; background: var(--gold-dim); border: 1px solid var(--gold-line); }
+.fragrance-notes__icon-wrap { width: 38px; height: 38px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.fragrance-notes__icon-img { max-width: 36px; max-height: 36px; width: auto; height: auto; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5)); }
 .fragrance-notes__name { font-size: 0.88rem; font-weight: 500; line-height: 1.25; }
 .fragrance-notes__empty { color: var(--text-secondary); font-size: 0.9rem; font-style: italic; margin: 6px 0; }
 
 /* Escritorio: tres tarjetas */
 .fragrance-notes__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; align-items: stretch; }
-.fragrance-notes__card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-card); overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-card); transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition); }
+.fragrance-notes__card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-card); overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-card); transition: border-color var(--transition); }
 @media (hover: hover) and (pointer: fine) {
-  .fragrance-notes__card:hover { transform: translateY(-4px); border-color: var(--gold-line); box-shadow: var(--shadow-hover); }
+  .fragrance-notes__card:hover { border-color: var(--ivory-line); }
   .fragrance-notes__card:hover .fragrance-notes__card-img { transform: scale(1.04); }
 }
-.fragrance-notes__card-media { position: relative; width: 100%; aspect-ratio: 16 / 11; overflow: hidden; background: #0e0e0e; border-bottom: 1px solid var(--border-card); }
-.fragrance-notes__card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.fragrance-notes__card-media { position: relative; width: 100%; aspect-ratio: 16 / 11; overflow: hidden; background: #cfc2a8; border-bottom: 1px solid var(--border-card); }
+.fragrance-notes__card-img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; transition: transform 0.5s ease; }
 .fragrance-notes__card-body { padding: 24px 26px 30px; flex: 1; }
-.fragrance-notes__card-title { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 500; letter-spacing: 0.08em; color: var(--gold); margin: 0; }
-.fragrance-notes__card-divider { height: 1px; background: linear-gradient(90deg, var(--gold-line) 0%, var(--border-card) 100%); margin: 14px 0 20px; }
+.fragrance-notes__card-title { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 500; letter-spacing: 0.04em; color: var(--text-primary); margin: 0; }
+.fragrance-notes__card-divider { height: 1px; background: var(--border-card); margin: 14px 0 20px; }
 .fragrance-notes__card .fragrance-notes__list { grid-template-columns: 1fr; gap: 12px; }
 .fragrance-notes__card .fragrance-notes__item { background: none; border: 0; padding: 0; min-height: 38px; gap: 14px; }
 .fragrance-notes__card .fragrance-notes__icon-wrap { width: 38px; height: 38px; }

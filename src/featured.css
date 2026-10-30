@@ -1,0 +1,102 @@
+/* ═══════════════════════════════════════════════════════════
+   featured.css — Vitrina "Fragancias Destacadas"
+   Escenario con el perfume en foco + selector de miniaturas + panel de compra.
+   Solo transform y opacity en las animaciones; sin movimiento con prefers-reduced-motion.
+   ═══════════════════════════════════════════════════════════ */
+.showcase { padding: var(--section-padding); }
+.showcase__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px; margin-bottom: 40px; }
+.showcase__intro .section-subtitle { margin-top: 4px; }
+
+.showcase__grid { display: grid; gap: 28px; }
+@media (min-width: 1000px) {
+  .showcase__grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); column-gap: clamp(40px, 5vw, 80px); align-items: center; }
+}
+.showcase__visual { min-width: 0; }
+
+/* ── Escenario ───────────────────────────────────────────── */
+.showcase__stage { position: relative; aspect-ratio: 1 / 1; overflow: hidden; border-radius: var(--radius-card); background: var(--gradient-image); }
+@media (min-width: 640px) { .showcase__stage { aspect-ratio: 3 / 2; } }
+.showcase__stage::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(0deg, rgba(10, 8, 7, 0.8) 0%, rgba(10, 8, 7, 0) 34%);
+  box-shadow: inset 0 0 0 1px rgba(240, 232, 218, 0.08);
+}
+.showcase__slide { position: absolute; inset: 0; opacity: 0; transform: scale(1.04); transition: opacity 0.9s ease, transform 1.6s var(--ease-out); }
+.showcase__slide.is-active { opacity: 1; transform: none; }
+.showcase__slide picture, .showcase__slide img { display: block; width: 100%; height: 100%; }
+.showcase__slide img { object-fit: cover; }
+
+.showcase__controls { position: absolute; z-index: 2; left: 20px; right: 16px; bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+.showcase__count { margin: 0; font-size: 0.72rem; letter-spacing: 0.18em; color: rgba(240, 235, 224, 0.7); font-variant-numeric: tabular-nums; }
+.showcase__count span { font-family: var(--font-heading); font-size: 1.7rem; letter-spacing: 0; color: var(--gold); }
+.showcase__arrows { display: flex; gap: 10px; }
+.showcase__arrow {
+  width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--ivory-line); border-radius: 50%;
+  background: rgba(14, 11, 9, 0.45); color: var(--ivory); font-size: 1rem;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+.showcase__arrow:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) { .showcase__arrow:hover { background: var(--gold); border-color: var(--gold); color: var(--text-on-gold); } }
+
+/* ── Selector de miniaturas ──────────────────────────────── */
+.showcase__index {
+  list-style: none; display: flex; gap: 12px; margin: 18px -20px 0; padding: 0 20px 4px;
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 20px; overscroll-behavior-x: contain; scrollbar-width: none;
+}
+.showcase__index::-webkit-scrollbar { display: none; }
+.showcase__index li { flex: 0 0 112px; scroll-snap-align: start; }
+@media (min-width: 1000px) {
+  .showcase__index { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); margin: 20px 0 0; padding: 0; overflow: visible; scroll-snap-type: none; }
+  .showcase__index li { flex: none; }
+}
+.showcase__item { display: grid; gap: 4px; width: 100%; padding: 0; text-align: left; opacity: 0.55; transition: opacity var(--transition); cursor: pointer; }
+.showcase__item.is-active { opacity: 1; }
+.showcase__item:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; opacity: 1; }
+@media (hover: hover) and (pointer: fine) { .showcase__item:hover { opacity: 1; } }
+.showcase__thumb { position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden; border-radius: var(--radius-card); background: var(--gradient-image); margin-bottom: 6px; }
+.showcase__thumb img { width: 100%; height: 100%; object-fit: cover; }
+.showcase__thumb::after { content: ""; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px rgba(240, 232, 218, 0.1); transition: box-shadow var(--transition); }
+.showcase__item.is-active .showcase__thumb::after { box-shadow: inset 0 0 0 2px var(--gold); }
+.showcase__item-brand { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sand); }
+.showcase__item-name { font-family: var(--font-heading); font-size: 1rem; font-weight: 500; line-height: 1.12; color: var(--ivory); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.showcase__item-price { font-size: 0.74rem; color: var(--color-price); font-variant-numeric: tabular-nums; }
+
+/* ── Panel de compra ─────────────────────────────────────── */
+.showcase__panel { min-width: 0; }
+.showcase__panel > * { animation: showcaseIn 0.7s var(--ease-out) backwards; }
+.showcase__panel > :nth-child(2) { animation-delay: 0.05s; }
+.showcase__panel > :nth-child(3) { animation-delay: 0.1s; }
+.showcase__panel > :nth-child(4) { animation-delay: 0.15s; }
+@keyframes showcaseIn { from { opacity: 0; transform: translate3d(0, 12px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+
+.showcase__brand { display: flex; align-items: center; gap: 14px; margin: 0 0 14px; font-size: 0.7rem; font-weight: 600; letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); }
+.showcase__badge { padding: 3px 10px; border: 1px solid var(--ivory-line); border-radius: var(--radius-btn); font-size: 0.62rem; letter-spacing: 0.14em; color: var(--ivory); }
+.showcase__name { margin: 0 0 18px; font-family: var(--font-heading); font-size: clamp(2.3rem, 4vw, 3.5rem); font-weight: 500; line-height: 1.04; letter-spacing: -0.01em; }
+.showcase__name a { color: inherit; transition: color var(--transition); }
+.showcase__name a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+@media (hover: hover) and (pointer: fine) { .showcase__name a:hover { color: var(--gold); } }
+.showcase__desc { margin: 0 0 26px; max-width: 46ch; color: var(--text-secondary); font-size: 0.98rem; line-height: 1.75; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+
+.showcase__buy { padding-top: 20px; border-top: 1px solid var(--border-card); }
+.showcase__sizes { display: flex; flex-wrap: wrap; gap: 0 22px; }
+.showcase__size {
+  min-height: 44px; padding: 0; font-size: 0.76rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary);
+  text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 1px; text-underline-offset: 8px;
+  transition: color var(--transition), text-decoration-color var(--transition);
+}
+.showcase__size[aria-pressed="true"] { color: var(--ivory); text-decoration-color: var(--gold); }
+.showcase__size:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .showcase__size:hover { color: var(--ivory); } }
+
+.showcase__price { display: flex; flex-direction: column; gap: 4px; margin: 8px 0 22px; }
+.showcase__price-label { font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-secondary); }
+.showcase__price-value { font-family: var(--font-price); font-size: 2rem; font-weight: 500; letter-spacing: 0.01em; color: var(--color-price); font-variant-numeric: tabular-nums; }
+.showcase__price-value.is-consult { font-size: 0.9rem; letter-spacing: 0.16em; text-transform: uppercase; }
+
+.showcase__actions { display: grid; gap: 6px; justify-items: start; }
+.showcase .cart-add--showcase { width: 100%; max-width: 400px; min-height: 54px; font-size: 0.78rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase__panel > * { animation: none; }
+  .showcase__slide { transition: opacity 0.2s linear; transform: none; }
+}

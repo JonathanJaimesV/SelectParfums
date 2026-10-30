@@ -57,103 +57,156 @@ export const NOTAS = {
 };
 
 /**
- * Diccionario y mapeo visual de notas aromáticas en español
+ * Diccionario y mapeo visual de notas aromáticas en español.
+ * Cada nota apunta a un icono ilustrado en /assets/images/notes/icons (fuentes SVG en icons-svg-fuente).
+ * Para agregar una nota nueva: crea el icono (PNG + SVG) y añade una línea aquí.
  */
+const ICON_DIR = "/assets/images/notes/icons/";
+const n = (es, icon) => ({ es, icon: `${ICON_DIR}${icon}.png` });
+
 export const NOTE_MAP = {
-  // Con iconos dedicados del diseño de referencia
-  "bergamota": { es: "Bergamota", icon: "/assets/images/notes/icons/bergamot.png" },
-  "bergamota de sicilia": { es: "Bergamota de Sicilia", icon: "/assets/images/notes/icons/bergamot.png" },
-
-  "lavanda": { es: "Lavanda", icon: "/assets/images/notes/icons/lavandin.png" },
-  "lavanda silvestre": { es: "Lavanda silvestre", icon: "/assets/images/notes/icons/lavandin.png" },
-  "lavandín": { es: "Lavandín", icon: "/assets/images/notes/icons/lavandin.png" },
-  "lavandin": { es: "Lavandín", icon: "/assets/images/notes/icons/lavandin.png" },
-
-  "canela": { es: "Canela", icon: "/assets/images/notes/icons/cinnamon.png" },
-
-  "manzana": { es: "Manzana", icon: "/assets/images/notes/icons/apple.png" },
-  "manzana verde": { es: "Manzana verde", icon: "/assets/images/notes/icons/apple.png" },
-  "manzana helada": { es: "Manzana Helada", icon: "/assets/images/notes/icons/apple.png" },
-
-  "lirio de los valles": { es: "Lirio de los valles", icon: "/assets/images/notes/icons/muguet.png" },
-
-  "azahar": { es: "Flor de Azahar", icon: "/assets/images/notes/icons/orange-blossom.png" },
-  "flor de azahar": { es: "Flor de Azahar", icon: "/assets/images/notes/icons/orange-blossom.png" },
-  "naranjo": { es: "Flor de Azahar (Naranjo)", icon: "/assets/images/notes/icons/orange-blossom.png" },
-  "neroli": { es: "Neroli (Azahar)", icon: "/assets/images/notes/icons/orange-blossom.png" },
-
-  "pachulí": { es: "Pachulí", icon: "/assets/images/notes/icons/patchouli.png" },
-  "pachuli": { es: "Pachulí", icon: "/assets/images/notes/icons/patchouli.png" },
-
-  "ámbar": { es: "Ámbar", icon: "/assets/images/notes/icons/amber.png" },
-  "ambar": { es: "Ámbar", icon: "/assets/images/notes/icons/amber.png" },
-  "ámbar gris": { es: "Ámbar gris", icon: "/assets/images/notes/icons/amber.png" },
-  "ambar gris": { es: "Ámbar gris", icon: "/assets/images/notes/icons/amber.png" },
-  "madera de ámbar": { es: "Madera de ámbar", icon: "/assets/images/notes/icons/amber.png" },
-  "amberwood": { es: "Madera de ámbar", icon: "/assets/images/notes/icons/amber.png" },
-
-  "vainilla": { es: "Vainilla", icon: "/assets/images/notes/icons/vanilla.png" },
-  "vainilla bourbon": { es: "Vainilla Bourbon", icon: "/assets/images/notes/icons/vanilla.png" },
-
-  "haba tonka": { es: "Haba tonka", icon: "/assets/images/notes/icons/tonka-bean.png" },
-
-  // Notas botánicas y amaderadas con iconos visuales
-  "mandarina": { es: "Mandarina", emoji: "🍊" },
-  "limón": { es: "Limón", emoji: "🍋" },
-  "limon": { es: "Limón", emoji: "🍋" },
-  "limón (lima ácida)": { es: "Limón (lima ácida)", emoji: "🍋" },
-  "limón italiano": { es: "Limón Italiano", emoji: "🍋" },
-  "naranja": { es: "Naranja", emoji: "🍊" },
-  "naranja sanguina": { es: "Naranja sanguina", emoji: "🍊" },
-  "naranja tangerina": { es: "Naranja Tangerina", emoji: "🍊" },
-  "toronja": { es: "Toronja", emoji: "🍊" },
-  "cardamomo": { es: "Cardamomo", emoji: "🫚" },
-  "pimienta rosa": { es: "Pimienta rosa", emoji: "🌶️" },
-  "jengibre": { es: "Jengibre", emoji: "🫚" },
-  "salvia": { es: "Salvia", emoji: "🌿" },
-  "enebro": { es: "Enebro", emoji: "🫐" },
-  "piña": { es: "Piña", emoji: "🍍" },
-  "grosella negra": { es: "Grosella negra", emoji: "🫐" },
-  "abrótano": { es: "Abrótano", emoji: "🌿" },
-  "azafrán": { es: "Azafrán", emoji: "🌾" },
-  "anís estrellado": { es: "Anís estrellado", emoji: "⭐" },
-  "jazmín": { es: "Jazmín", emoji: "🌸" },
-  "menta": { es: "Menta", emoji: "🍃" },
-  "rosa": { es: "Rosa", emoji: "🌹" },
-  "notas ozónicas": { es: "Notas ozónicas", emoji: "🌊" },
-  "cachemira": { es: "Cachemira", emoji: "🪶" },
-  "geranio": { es: "Geranio", emoji: "🌺" },
-  "abedul": { es: "Abedul", emoji: "🪵" },
-  "elemí": { es: "Elemí", emoji: "🌿" },
-  "té verde": { es: "Té verde", emoji: "🍵" },
-  "ciruela": { es: "Ciruela", emoji: "🍑" },
-  "almizcle": { es: "Almizcle", emoji: "🫧" },
-  "musgo": { es: "Musgo", emoji: "🌿" },
-  "cedro": { es: "Cedro", emoji: "🪵" },
-  "madera de cedro": { es: "Madera de cedro", emoji: "🪵" },
-  "sándalo": { es: "Sándalo", emoji: "🪵" },
-  "ambroxan": { es: "Ambroxan", emoji: "🧪" },
-  "ciprés": { es: "Ciprés", emoji: "🌲" },
-  "resina de abeto": { es: "Resina de abeto", emoji: "🌲" },
-  "praliné": { es: "Praliné", emoji: "🍫" },
-  "madera de gaiac": { es: "Madera de gaiac", emoji: "🪵" },
-  "notas amaderadas": { es: "Notas Amaderadas", emoji: "🪵" },
-  "driftwood": { es: "Driftwood", emoji: "🪵" },
+  "bergamota": n("Bergamota", "bergamot"),
+  "bergamota de sicilia": n("Bergamota de Sicilia", "bergamot"),
+  "lavanda": n("Lavanda", "lavandin"),
+  "lavanda silvestre": n("Lavanda silvestre", "lavandin"),
+  "lavandín": n("Lavandín", "lavandin"),
+  "lavandin": n("Lavandín", "lavandin"),
+  "canela": n("Canela", "cinnamon"),
+  "manzana": n("Manzana", "apple"),
+  "manzana verde": n("Manzana verde", "apple"),
+  "manzana helada": n("Manzana Helada", "apple"),
+  "lirio de los valles": n("Lirio de los valles", "muguet"),
+  "azahar": n("Flor de Azahar", "orange-blossom"),
+  "flor de azahar": n("Flor de Azahar", "orange-blossom"),
+  "naranjo": n("Flor de Azahar (Naranjo)", "orange-blossom"),
+  "flor de azahar (naranjo)": n("Flor de Azahar (Naranjo)", "orange-blossom"),
+  "neroli": n("Neroli (Azahar)", "orange-blossom"),
+  "pachulí": n("Pachulí", "patchouli"),
+  "pachuli": n("Pachulí", "patchouli"),
+  "ámbar": n("Ámbar", "amber"),
+  "ambar": n("Ámbar", "amber"),
+  "ámbar gris": n("Ámbar gris", "amber"),
+  "ambar gris": n("Ámbar gris", "amber"),
+  "madera de ámbar": n("Madera de ámbar", "amber"),
+  "amberwood": n("Madera de ámbar", "amber"),
+  "vainilla": n("Vainilla", "vanilla"),
+  "vainilla bourbon": n("Vainilla Bourbon", "vanilla"),
+  "haba tonka": n("Haba tonka", "tonka-bean"),
+  "limón": n("Limón", "lemon"),
+  "limon": n("Limón", "lemon"),
+  "limón italiano": n("Limón Italiano", "lemon"),
+  "limón (lima ácida)": n("Limón (lima ácida)", "lime"),
+  "lima": n("Limón (lima ácida)", "lime"),
+  "lima ácida": n("Limón (lima ácida)", "lime"),
+  "naranja": n("Naranja", "orange"),
+  "naranja tangerina": n("Naranja Tangerina", "mandarin"),
+  "mandarina": n("Mandarina", "mandarin"),
+  "naranja sanguina": n("Naranja sanguina", "blood-orange"),
+  "toronja": n("Toronja", "grapefruit"),
+  "pomelo": n("Toronja", "grapefruit"),
+  "cardamomo": n("Cardamomo", "cardamom"),
+  "pimienta rosa": n("Pimienta rosa", "pink-pepper"),
+  "pimienta negra": n("Pimienta negra", "black-pepper"),
+  "jengibre": n("Jengibre", "ginger"),
+  "anís estrellado": n("Anís estrellado", "star-anise"),
+  "azafrán": n("Azafrán", "saffron"),
+  "nuez moscada": n("Nuez moscada", "nutmeg"),
+  "enebro": n("Enebro", "juniper"),
+  "rosa": n("Rosa", "rose"),
+  "jazmín": n("Jazmín", "jasmine"),
+  "flores blancas": n("Flores blancas", "white-flowers"),
+  "geranio": n("Geranio", "geranium"),
+  "violeta": n("Violeta", "violet"),
+  "iris": n("Iris", "iris"),
+  "nardos": n("Nardos", "tuberose"),
+  "nardo": n("Nardos", "tuberose"),
+  "tuberosa": n("Nardos", "tuberose"),
+  "davana": n("Davana", "davana"),
+  "menta": n("Menta", "mint"),
+  "salvia": n("Salvia", "sage"),
+  "abrótano": n("Abrótano", "sage"),
+  "hojas de higuera": n("Hojas de higuera", "fig-leaf"),
+  "musgo": n("Musgo", "moss"),
+  "té verde": n("Té verde", "green-tea"),
+  "vetiver": n("Vetiver", "vetiver"),
+  "ciprés": n("Ciprés", "conifer"),
+  "resina de abeto": n("Resina de abeto", "conifer"),
+  "cedro": n("Cedro", "wood-log"),
+  "madera de cedro": n("Madera de cedro", "wood-log"),
+  "madera de gaiac": n("Madera de gaiac", "wood-log"),
+  "notas amaderadas": n("Notas Amaderadas", "wood-log"),
+  "madera seca": n("Madera seca", "wood-log"),
+  "mahonial": n("Mahonial", "wood-log"),
+  "akigalawood": n("Akigalawood", "wood-log"),
+  "sándalo": n("Sándalo", "sandalwood"),
+  "abedul": n("Abedul", "birch"),
+  "driftwood": n("Driftwood", "driftwood"),
+  "elemí": n("Elemí", "resin"),
+  "benjuí": n("Benjuí", "resin"),
+  "mirra": n("Mirra", "resin"),
+  "ládano": n("Ládano", "resin"),
+  "almizcle": n("Almizcle", "musk"),
+  "ambroxan": n("Ambroxan", "ambroxan"),
+  "ambrofix": n("AmbroFix", "ambroxan"),
+  "notas ozónicas": n("Notas ozónicas", "ozone"),
+  "cachemira": n("Cachemira", "cashmere"),
+  "gamuza": n("Gamuza", "suede"),
+  "notas atalcadas": n("Notas atalcadas", "powder"),
+  "piña": n("Piña", "pineapple"),
+  "grosella negra": n("Grosella negra", "blackcurrant"),
+  "frutos rojos": n("Frutos rojos", "red-berries"),
+  "bayas silvestres": n("Bayas silvestres", "wild-berries"),
+  "cereza": n("Cereza", "cherry"),
+  "ciruela": n("Ciruela", "plum"),
+  "pera": n("Pera", "pear"),
+  "higo": n("Higo", "fig"),
+  "mango": n("Mango", "mango"),
+  "pitahaya": n("Pitahaya", "dragonfruit"),
+  "coco": n("Coco", "coconut"),
+  "agua de coco": n("Agua de coco", "coconut"),
+  "ruibarbo": n("Ruibarbo", "rhubarb"),
+  "mirabel": n("Mirabel", "mirabelle"),
+  "frutas confitadas": n("Frutas confitadas", "candied-fruit"),
+  "dátiles": n("Dátiles", "dates"),
+  "praliné": n("Praliné", "praline"),
+  "cacao": n("Cacao", "cacao"),
+  "tófe": n("Tófe", "toffee"),
+  "toffee": n("Tófe", "toffee"),
+  "coñac": n("Coñac", "cognac"),
+  "tabaco": n("Tabaco", "tobacco"),
+  "café": n("Café", "coffee"),
 };
 
+/** Icono por defecto para notas que aún no tienen uno propio (en vez de un emoji). */
+export const GENERIC_NOTE_ICON = `${ICON_DIR}generic.png`;
+
+// Reglas por palabra clave: cubren notas nuevas (p. ej. creadas desde el admin) con un icono afín.
+const KEYWORD_ICONS = [
+  [/madera|wood|cedro|amadera/, "wood-log"], [/lim[oó]n|lima/, "lemon"], [/naranja/, "orange"], [/mandarina/, "mandarin"],
+  [/resina|benju|mirra|l[aá]dano|incienso/, "resin"], [/[aá]mbar/, "amber"], [/vainilla/, "vanilla"], [/rosa\b/, "rose"],
+  [/flor|jazm|azahar/, "white-flowers"], [/musgo/, "moss"], [/menta/, "mint"], [/fruta|frut/, "red-berries"],
+  [/pimienta/, "black-pepper"], [/almizcle|musk/, "musk"], [/coco/, "coconut"], [/caf[eé]/, "coffee"], [/cacao|chocolate/, "cacao"],
+];
+
+const norm = (s) => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+const NORM_INDEX = Object.fromEntries(Object.entries(NOTE_MAP).map(([k, v]) => [norm(k), v]));
+
 /**
- * Normaliza y obtiene información de la nota en español
+ * Normaliza y obtiene información de la nota en español (sin emojis: siempre devuelve un icono).
  */
 export function getNoteInfo(rawName) {
-  if (!rawName) return { name: "", es: "", icon: null, emoji: "✨" };
+  if (!rawName) return { name: "", es: "", icon: GENERIC_NOTE_ICON };
   const clean = String(rawName).trim();
-  const key = clean.toLowerCase();
-  const info = NOTE_MAP[key] || {};
+  const key = norm(clean);
+  let info = NORM_INDEX[key];
+  if (!info) {
+    const hit = KEYWORD_ICONS.find(([re]) => re.test(key));
+    info = hit ? { icon: `${ICON_DIR}${hit[1]}.png` } : {};
+  }
   return {
     raw: clean,
     name: info.es || clean,
     es: info.es || clean,
-    icon: info.icon || null,
-    emoji: info.emoji || "✨",
+    icon: info.icon || GENERIC_NOTE_ICON,
   };
 }

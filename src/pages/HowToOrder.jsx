@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
 import Reveal from "../components/Reveal.jsx";
 import { Icon } from "../components/Icons.jsx";
-import { WA_GENERIC, useTitle } from "../utils";
+import { useSeo } from "../seo";
+import { STATIC_SEO } from "../seoData.js";
+import { WA_GENERIC } from "../utils";
 
 const STEPS = [
-  ["Elige tu fragancia", <>Explora nuestro catálogo y selecciona el formato que prefieras: <strong>Frasco completo</strong>, <strong>Decant de 5 ml</strong> o <strong>Decant de 10 ml</strong>.</>],
-  ["Escríbenos por WhatsApp", "Haz clic en el botón de compra del perfume. Se abrirá una conversación con el mensaje prellenado indicando la fragancia y formato. Te responderemos al instante confirmando disponibilidad."],
+  ["Arma tu pedido", <>Explora el catálogo, elige el formato que prefieras (<strong>Frasco completo</strong>, <strong>Decant de 5 ml</strong> o <strong>Decant de 10 ml</strong>) y agrégalo a tu pedido. Puedes sumar varias fragancias.</>],
+  ["Finaliza por WhatsApp", "Revisa tu pedido y pulsa «Finalizar pedido por WhatsApp». Se abrirá una conversación con el detalle completo (fragancias, formatos, cantidades y total) listo para enviar. Tu pedido queda confirmado cuando el vendedor te responda y valide la disponibilidad."],
   ["Paga y Recibe", "Realizas el pago seguro y despachamos tu pedido completamente original y te avisaremos en cuanto tiempo pasaremos a tu domicilio."],
 ];
 const PAYMENTS = [
@@ -16,7 +18,7 @@ const PAYMENTS = [
 ];
 
 export default function HowToOrder() {
-  useTitle("Cómo Hacer Tu Pedido | SelectParfums");
+  useSeo(STATIC_SEO["/como-pedir"]);
   return (
     <>
       <PageBanner crumb="Cómo pedir" label="Proceso de compra" title="Cómo Hacer Tu Pedido"

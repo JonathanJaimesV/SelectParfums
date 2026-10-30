@@ -1,39 +1,71 @@
 import { useEffect, useState } from "react";
-import { WHATSAPP_NUMBER } from "./config";
+import { WHATSAPP_NUMBER, SITE_URL } from "./config";
+import { IMAGE_MANIFEST } from "./data/imageManifest";
+import { formatPrice, sizeOptions, defaultSizeKey, isSoldOut, isValidPrice } from "./pricing";
 
-export const formatPrice = (v) => (v == null ? "Consultar" : "$" + v.toLocaleString("es-CO"));
+// Formato y reglas de precio centralizados en ./pricing (se reexportan para no romper imports existentes)
+export { formatPrice, sizeOptions, defaultSizeKey, isSoldOut };
+
 export const waUrl = (msg) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 export const WA_GENERIC = waUrl("Hola, estoy interesado en sus fragancias de SelectParfums. ¿Me pueden ayudar?");
 export const useTitle = (t) => useEffect(() => { document.title = t; }, [t]);
 
 /**
- * Las 3 imágenes del carrusel: principal + 2 adicionales.
- * Por defecto las adicionales se buscan con el mismo nombre + "-2" y "-3"
- * (ej. armaf-dunescape.jpg → armaf-dunescape-2.jpg y armaf-dunescape-3.jpg).
- * Si quieres otros nombres, agrega `imagenes: ["/ruta1.jpg", "/ruta2.jpg", "/ruta3.jpg"]` al perfume.
+ * Fotos del carrusel: principal + hasta 2 adicionales (máx. 3).
+ * Cada hueco se resuelve así: 1) la ruta explícita en `imagenes[i]` del perfume, si existe;
+ * 2) si no, un nombre por convención a partir de la principal en la MISMA carpeta:
+ *    khamrah-1.jpg → khamrah-2.jpg y khamrah-3.jpg   |   armaf-dunescape.jpg → armaf-dunescape-2.jpg y -3.jpg
+ * En producción solo se incluyen las fotos que existen en public/ (lista generada en cada build por
+ * scripts/gen-image-manifest.mjs): el carrusel muestra puntos/flechas solo con varias fotos y el navegador
+ * no pide archivos inexistentes. En `npm run dev` se prueban todas (onError descarta las rotas).
  */
+const imageExists = (src) =>
+  !src || import.meta.env.DEV || !src.startsWith("/assets/images/") || IMAGE_MANIFEST.has(src);
+
+const autoName = (main, n) => {
+  if (!main || !main.startsWith("/assets/")) return null; // data: / https: → sin nombre automático
+  return /-1\.\w+$/.test(main) ? main.replace(/-1(\.\w+)$/, `-${n}$1`) : main.replace(/(\.\w+)$/, `-${n}$1`);
+};
+
+/**
+ * Miniatura para tarjetas/carrito: <foto>-card.jpg (generada con `npm run images:thumbs`).
+ * Si no existe (foto nueva sin miniatura, imagen externa o data:) se usa la foto original: nunca queda rota.
+ */
+export const thumbOf = (src) => {
+  if (!src || !/^\/assets\/images\/.+\.jpe?g$/i.test(src)) return src;
+  const thumb = src.replace(/\.jpe?g$/i, "-card.jpg");
+  return IMAGE_MANIFEST.has(thumb) ? thumb : src;
+};
+
+/**
+ * srcset para fotos grandes (hero, ficha): variante de 800 px para móviles + original de 1200 px.
+ * Devuelve undefined si no hay variante (el navegador usa solo `src`).
+ */
+export const srcSetOf = (src) => {
+  if (!src || !/^\/assets\/images\/.+\.jpe?g$/i.test(src)) return undefined;
+  const small = src.replace(/\.jpe?g$/i, "-800.jpg");
+  return IMAGE_MANIFEST.has(small) ? `${small} 800w, ${src} 1200w` : undefined;
+};
+
+/** Solo lo que el perfume define explícitamente (sin nombres por convención): es lo que edita el panel admin. */
+export const explicitGallery = (p) => {
+  const arr = Array.isArray(p.imagenes) ? p.imagenes : [];
+  return [arr[0] || p.imagen || null, arr[1] || null, arr[2] || null];
+};
+
 export const galleryOf = (p) => {
-  const hasImgs = Array.isArray(p.imagenes) && p.imagenes.some(Boolean);
-  if (hasImgs) return [0, 1, 2].map((i) => p.imagenes[i] || null);
-  const main = p.imagen || (Array.isArray(p.imagenes) ? p.imagenes.find(Boolean) : null);
+  const arr = Array.isArray(p.imagenes) ? p.imagenes : [];
+  const main = arr[0] || p.imagen || arr.find(Boolean) || null;
   if (!main) return [null, null, null];
-  const extra = (n) => main.replace(/(\.\w+)$/, `-${n}$1`);
-  return [main, extra(2), extra(3)];
+  const list = [main, arr[1] || autoName(main, 2), arr[2] || autoName(main, 3)];
+  // la principal siempre se intenta; las adicionales solo si existen
+  return list.map((src, i) => (i === 0 || imageExists(src) ? src : null));
 };
 
 /** "Club de Nuit Intense Man EDT" → "club-de-nuit-intense-man-edt" (para la URL) */
 export const slugify = (s) =>
   s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 export const perfumeSlug = (p) => p.slug || slugify(p.nombre);
-
-/** Formatos de compra de un perfume: decants de 5 y 10 ml + frasco completo. */
-export const sizeOptions = (p) => [
-  { key: "5", type: "Decant", size: "5 ml", short: "5 ml", label: "Decant 5 ml", price: p.precioDecant5 },
-  { key: "10", type: "Decant", size: "10 ml", short: "10 ml", label: "Decant 10 ml", price: p.precioDecant10 },
-  { key: "full", type: "Frasco", size: p.tamanoFrasco, short: "Frasco", label: `Frasco ${p.tamanoFrasco}`, price: p.precioFrasco },
-];
-/** Formato inicial: el más pequeño que tenga precio (si ninguno, el frasco). */
-export const defaultSizeKey = (p) => (sizeOptions(p).find((o) => o.price != null) || { key: "full" }).key;
 
 /** Hook para `matchMedia` (p. ej. cambiar acordeón ↔ tarjetas según el ancho). */
 export const useMediaQuery = (query) => {
@@ -47,3 +79,13 @@ export const useMediaQuery = (query) => {
   }, [query]);
   return matches;
 };
+
+/* ───────── Búsqueda y disponibilidad ───────── */
+
+// Búsqueda y precio de entrada: lógica pura en ./catalogQuery.js (re-exportada para no romper imports)
+export { normalize, searchText, matchesQuery, entryPrice } from "./catalogQuery.js";
+
+/* ───────── URLs y mensajes ───────── */
+export const perfumePath = (p) => `/perfume/${perfumeSlug(p)}`;
+export const perfumeAbsUrl = (p) => `${SITE_URL}${perfumePath(p)}`;
+export const absUrl = (path) => (/^https?:/.test(path) ? path : `${SITE_URL}${path}`);

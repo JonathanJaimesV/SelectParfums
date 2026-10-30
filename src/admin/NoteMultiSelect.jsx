@@ -1,3 +1,4 @@
+import { Icon } from "../components/Icons.jsx";
 import { useId, useMemo, useRef, useState } from "react";
 import { slugify } from "../utils";
 
@@ -71,7 +72,7 @@ export default function NoteMultiSelect({ label, value, options, onChange, onCre
             <li key={it.type + it.name} id={`${uid}-o${i}`} role="option" aria-selected={i === active}
               className={`adm-listbox__item${i === active ? " is-active" : ""}${it.type === "new" ? " is-new" : ""}`}
               onMouseDown={(e) => { e.preventDefault(); add(it); }} onMouseEnter={() => setActive(i)}>
-              {it.type === "new" ? <>＋ Crear nueva nota «{it.name}»</> : it.name}
+              {it.type === "new" ? <><Icon name="plus" className="icon icon--sm" /> Crear nueva nota «{it.name}»</> : it.name}
             </li>
           ))}
         </ul>

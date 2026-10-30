@@ -1,3 +1,4 @@
+import { Icon } from "../components/Icons.jsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./admin.css";
@@ -74,7 +75,7 @@ export default function AdminPage() {
             <div className="adm-top__actions">
               <Link to="/catalogo" className="adm-btn adm-btn--ghost">Ver tienda</Link>
               <button type="button" className="adm-btn adm-btn--ghost" onClick={exportCatalog}>Exportar products.js</button>
-              <button type="button" className="adm-btn adm-btn--gold" onClick={() => setForm({ product: null })}>＋ Nuevo perfume</button>
+              <button type="button" className="adm-btn adm-btn--gold" onClick={() => setForm({ product: null })}><Icon name="plus" className="icon icon--sm" /> Nuevo perfume</button>
             </div>
           </div>
         </header>

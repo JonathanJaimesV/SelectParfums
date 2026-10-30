@@ -1,90 +1,126 @@
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
 import { Icon } from "../components/Icons.jsx";
-import ProductCard from "../components/ProductCard.jsx";
+import FeaturedShowcase from "../components/FeaturedShowcase.jsx";
+import HouseShowcase from "../components/HouseShowcase.jsx";
 import { useCatalog } from "../context/CatalogContext.jsx";
-import { useTitle } from "../utils";
+import { useSeo } from "../seo";
+import { STATIC_SEO } from "../seoData.js";
+import { isSoldOut } from "../utils";
+import "../hero.css";
 
-const HUBS = [
-  ["/catalogo", "sparkle", "Catálogo Completo", "Explora todas nuestras fragancias con filtros por notas, marcas y precios.", "Ver catálogo"],
-  ["/marcas", "gem", "Nuestras Casas", "Afnan, Armaf, French Avenue y Rasasi: el legado y prestigio oriental.", "Conocer marcas"],
-  ["/decants", "flask", "¿Qué es un Decant?", "Conoce los formatos de 5 ml y 10 ml y aprende a probar antes de comprar.", "Descubrir decants"],
-  ["/como-pedir", "box", "Cómo Pedir", "Proceso en 3 pasos, pagos por llave NU/Transferencia y envíos a Cúcuta y Bogotá.", "Guía de compra"],
+// Fotografía de campaña del hero (recurso estático en /public).
+const HERO_IMAGE = "/assets/images/hero/hero-campaign.png";          // 1672 px
+const HERO_IMAGE_2X = "/assets/images/hero/hero-campaign-2x.png";    // 3344 px (pantallas grandes / retina)
+
+const TRUST_ITEMS = [
+  ["flask", "Fragancias Originales", "Decants trasvasados de frascos auténticos con atomizadores de calidad."],
+  ["truck", "Envíos a Colombia", "Despacho a Cúcuta y Bogotá por Coordinadora, Interrapidísimo o Servientrega."],
+  ["phone", "Atención Directa", "Asesoría personalizada por WhatsApp en cada paso de tu compra."],
 ];
 
 export default function Home() {
-  useTitle("SelectParfums — Fragancias Árabes y de Nicho | Frascos y Decants");
-  const { productos: PRODUCTOS } = useCatalog();
+  useSeo(STATIC_SEO["/"]);
+  const { productos: PRODUCTOS, marcas: MARCAS } = useCatalog();
+
+  // Destacados: los marcados con `destacado: true` en el catálogo (si hay); si no, los primeros con foto que no estén agotados.
+  const available = PRODUCTOS.filter((p) => !isSoldOut(p) && p.imagen);
+  const marked = available.filter((p) => p.destacado === true);
+  const featured = (marked.length ? marked : available).slice(0, 6);
+
   return (
     <>
-      <section className="hero" id="inicio">
-        <div className="container hero__grid">
-          <div className="hero__content">
-            <span className="hero__label">Frascos completos y decants</span>
-            <h1 className="hero__title">Fragancias árabes y de nicho con carácter</h1>
-            <p className="hero__text">
-              Descubre perfumes exclusivos del Medio Oriente y casas de nicho. Compra frascos completos o prueba una fragancia nueva con nuestros decants de 5 ml y 10 ml.
-            </p>
-            <div className="hero__buttons">
-              <Link to="/catalogo" className="btn-gold">Ver catálogo</Link>
-              <Link to="/decants" className="btn-outline">¿Qué es un decant?</Link>
-            </div>
+      {/* ── HERO ── */}
+      <section className="cine-hero" id="inicio" aria-labelledby="hero-title">
+        <div className="cine-hero__stage" aria-hidden="true">
+          <div className="cine-hero__light" />
+          <div className="cine-hero__media">
+            {/* Fotografía de campaña: public/assets/images/hero/hero-campaign.jpg. Si el archivo no existe, el hero se ve igual (solo luz). */}
+            <img
+              className="cine-hero__img"
+              src={HERO_IMAGE}
+              srcSet={`${HERO_IMAGE} 1672w, ${HERO_IMAGE_2X} 3344w`}
+              sizes="100vw"
+              alt=""
+              width="1672" height="940"
+              fetchPriority="high"
+              decoding="async"
+              ref={(el) => { if (el && el.complete && el.naturalWidth > 0) el.classList.add("is-loaded"); }}
+              onLoad={(e) => e.currentTarget.classList.add("is-loaded")}
+              onError={(e) => { e.currentTarget.style.display = "none"; }}
+            />
           </div>
-          <div className="hero__visual" aria-hidden="true">
-            <svg className="hero__bottle" viewBox="0 0 200 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="72" y="10" width="56" height="50" rx="6" fill="rgba(212,175,106,0.15)" stroke="#d4af37" strokeWidth="1.5" />
-              <rect x="88" y="0" width="24" height="16" rx="4" fill="rgba(212,175,106,0.25)" stroke="#d4af37" strokeWidth="1" />
-              <rect x="85" y="60" width="30" height="30" rx="2" fill="rgba(212,175,106,0.08)" stroke="#d4af37" strokeWidth="1" />
-              <rect x="35" y="90" width="130" height="200" rx="16" fill="rgba(212,175,106,0.06)" stroke="#d4af37" strokeWidth="1.5" />
-              <rect x="42" y="160" width="116" height="123" rx="12" fill="rgba(212,175,106,0.1)" />
-              <rect x="52" y="130" width="97" height="80" rx="8" fill="rgba(212,175,106,0.05)" stroke="#d4af37" strokeWidth="0.8" />
-              <image x="48" y="136" width="105" height="68" href="/assets/images/Logo.png" preserveAspectRatio="xMidYMid meet" />
-              <line x1="50" y1="100" x2="50" y2="270" stroke="rgba(212,175,106,0.15)" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="100" cy="68" r="3" fill="#d4af37" opacity="0.4" />
-            </svg>
+          <div className="cine-hero__shade" />
+        </div>
+        <div className="container cine-hero__inner">
+          <p className="cine-hero__eyebrow">Perfumería árabe y de nicho en Colombia</p>
+          <h1 className="cine-hero__title" id="hero-title">
+            <span className="cine-hero__line"><span>Fragancias</span></span>{" "}
+            <span className="cine-hero__line"><span>con carácter<span className="hero__title-dot">.</span></span></span>
+          </h1>
+          <div className="cine-hero__foot">
+            <p className="cine-hero__text">
+              Descubre perfumes exclusivos del Medio Oriente y casas de nicho reconocidas. Frascos completos o decants de 5 ml y 10 ml para probar antes de comprar.
+            </p>
+            <div className="cine-hero__actions">
+              <Link to="/catalogo" className="btn-gold">Explorar catálogo <span className="cine-hero__arrow" aria-hidden="true">&rarr;</span></Link>
+              <Link to="/decants" className="btn-outline">Descubrir decants</Link>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="hub-section">
+      {/* ── CASAS ── */}
+      {MARCAS.length > 0 && (
+        <section className="houses-section" aria-labelledby="houses-title">
+          <div className="container">
+            <div className="houses-section__header">
+              <Reveal className="houses-section__intro">
+                <p className="section-label">Nuestras casas</p>
+                <h2 className="section-title" id="houses-title">Descubre por casa</h2>
+                <p className="section-subtitle">Elige una casa y explora sus fragancias.</p>
+              </Reveal>
+              <Link to="/marcas" className="link-arrow">Conocer todas las casas <span className="arrow" aria-hidden="true">&rarr;</span></Link>
+            </div>
+            <HouseShowcase marcas={MARCAS} />
+          </div>
+        </section>
+      )}
+
+      {/* ── FRAGANCIAS DESTACADAS ── */}
+      <FeaturedShowcase items={featured} />
+
+      {/* ── CONFIANZA ── */}
+      <section className="trust-section">
         <div className="container">
-          <div className="hub-grid">
-            {HUBS.map(([to, icon, title, desc, cta]) => (
-              <Reveal as={Link} key={to} to={to} className="hub-card">
-                <div>
-                  <div className="hub-card__icon"><Icon name={icon} /></div>
-                  <h2 className="hub-card__title">{title}</h2>
-                  <p className="hub-card__desc">{desc}</p>
+          <div className="trust-grid">
+            {TRUST_ITEMS.map(([icon, title, text]) => (
+              <Reveal key={title} className="trust-card">
+                <div className="trust-card__icon">
+                  <Icon name={icon} />
                 </div>
-                <span className="hub-card__link">{cta} &rarr;</span>
+                <div>
+                  <h3 className="trust-card__title">{title}</h3>
+                  <p className="trust-card__text">{text}</p>
+                </div>
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="catalog-section">
-        <div className="container">
-          <Reveal className="catalog-section__header">
-            <p className="section-label">Selección especial</p>
-            <h2 className="section-title">Fragancias Destacadas</h2>
-            <p className="section-subtitle">Las creaciones más cotizadas y reconocidas de nuestro catálogo.</p>
-          </Reveal>
-          <div className="products-grid">
-            {PRODUCTOS.slice(3, 8).map((p) => <ProductCard key={p.id} p={p} />)}
-          </div>
-          <div style={{ textAlign: "center", marginTop: 40 }}>
-            <Link to="/catalogo" className="btn-gold">Explorar todas las fragancias</Link>
+          <div className="trust-section__more">
+            <Link to="/como-pedir" className="link-arrow">Cómo pedir <span className="arrow" aria-hidden="true">&rarr;</span></Link>
           </div>
         </div>
       </section>
 
-      <section className="decant-section" style={{ borderTop: "1px solid var(--border-card)" }}>
+      {/* ── DECANTS CTA ── */}
+      <section className="decant-section">
         <div className="container">
           <Reveal className="decant-section__header">
             <p className="section-label">Conoce nuestro formato</p>
             <h2 className="section-title">Prueba antes de comprar</h2>
-            <p className="section-subtitle">Disfruta de perfumes de alta gama en porciones portátiles con atomizadores de calidad.</p>
+            <p className="section-subtitle">
+              Disfruta de perfumes de alta gama en porciones portátiles con atomizadores de calidad.
+            </p>
           </Reveal>
           <div className="decant-cards">
             <Reveal className="decant-card">
@@ -98,7 +134,7 @@ export default function Home() {
               <p className="decant-card__text">Más cantidad para llevarla contigo y usarla en tu día a día. Ideal para fragancias que ya conoces y amas.</p>
             </Reveal>
           </div>
-          <div style={{ textAlign: "center", marginTop: 36 }}>
+          <div style={{ marginTop: 40 }}>
             <Link to="/decants" className="btn-outline">Leer guía completa de decants</Link>
           </div>
         </div>

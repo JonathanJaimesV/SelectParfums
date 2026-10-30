@@ -1,16 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "./Icons.jsx";
+import { srcSetOf } from "../utils";
 
 /**
  * Carrusel con scroll-snap nativo: el swipe lo resuelve el navegador (fluido, con inercia y
  * sin pelear con el scroll vertical). Mantiene flechas (solo puntero fino), puntos y teclado.
+ * Las imágenes que no existen (404) se descartan: solo se muestran fotos reales.
  */
 export default function Carousel({ images, alt }) {
   const [i, setI] = useState(0);
   const [failed, setFailed] = useState({});
   const track = useRef(null);
   const raf = useRef(0);
-  const n = images.length;
+
+  const slides = images.map((src, k) => ({ src, k })).filter((s) => s.src && !failed[s.k]);
+  const n = slides.length;
+  const multi = n > 1;
+  const cur = Math.min(i, Math.max(n - 1, 0));
 
   const go = (k) => {
     const idx = (k + n) % n;
@@ -29,32 +35,34 @@ export default function Carousel({ images, alt }) {
   useEffect(() => () => cancelAnimationFrame(raf.current), []);
 
   return (
-    <div className="carousel" tabIndex={0} aria-roledescription="carrusel"
-      onKeyDown={(e) => { if (e.key === "ArrowLeft") go(i - 1); if (e.key === "ArrowRight") go(i + 1); }}>
+    <div className="carousel" tabIndex={multi ? 0 : undefined} role="group" aria-roledescription={multi ? "carrusel" : undefined} aria-label={`Fotos de ${alt}`}
+      onKeyDown={multi ? (e) => { if (e.key === "ArrowLeft") go(cur - 1); if (e.key === "ArrowRight") go(cur + 1); } : undefined}>
       <div className="carousel__viewport">
         <div className="carousel__track" ref={track} onScroll={onScroll}>
-          {images.map((src, k) => (
+          {n === 0 ? (
+            <div className="carousel__slide">
+              <span className="carousel__placeholder"><Icon name="bottle" />Imagen del perfume</span>
+            </div>
+          ) : slides.map(({ src, k }, pos) => (
             <div className="carousel__slide" key={k}>
-              {src && !failed[k] ? (
-                <img src={src} alt={`${alt} — imagen ${k + 1}`} draggable={false} decoding="async" loading={k === 0 ? "eager" : "lazy"}
-                  onError={() => setFailed((f) => ({ ...f, [k]: true }))} />
-              ) : (
-                <span className="carousel__placeholder">
-                  <Icon name="bottle" />
-                  {k === 0 ? "Imagen del perfume" : `Imagen adicional ${k + 1}`}
-                </span>
-              )}
+              <img src={src} srcSet={srcSetOf(src)} sizes="(min-width: 900px) 640px, 100vw" alt={multi ? `${alt} — imagen ${pos + 1} de ${n}` : alt} draggable={false} decoding="async"
+                {...(pos === 0 ? { fetchPriority: "high" } : { loading: "lazy" })}
+                onError={() => setFailed((f) => ({ ...f, [k]: true }))} />
             </div>
           ))}
         </div>
-        <button className="carousel__btn carousel__btn--prev" onClick={() => go(i - 1)} aria-label="Imagen anterior"><Icon name="left" /></button>
-        <button className="carousel__btn carousel__btn--next" onClick={() => go(i + 1)} aria-label="Imagen siguiente"><Icon name="right" /></button>
+        {multi && <>
+          <button className="carousel__btn carousel__btn--prev" onClick={() => go(cur - 1)} aria-label="Imagen anterior"><Icon name="left" /></button>
+          <button className="carousel__btn carousel__btn--next" onClick={() => go(cur + 1)} aria-label="Imagen siguiente"><Icon name="right" /></button>
+        </>}
       </div>
-      <div className="carousel__dots">
-        {images.map((_, k) => (
-          <button key={k} className={`carousel__dot${k === i ? " is-active" : ""}`} onClick={() => go(k)} aria-label={`Ver imagen ${k + 1}`} aria-current={k === i} />
-        ))}
-      </div>
+      {multi && (
+        <div className="carousel__dots">
+          {slides.map((_, pos) => (
+            <button key={pos} className={`carousel__dot${pos === cur ? " is-active" : ""}`} onClick={() => go(pos)} aria-label={`Ver imagen ${pos + 1}`} aria-current={pos === cur} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

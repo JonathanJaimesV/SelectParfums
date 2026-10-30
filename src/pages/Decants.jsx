@@ -2,22 +2,23 @@ import { Link } from "react-router-dom";
 import PageBanner from "../components/PageBanner.jsx";
 import Reveal from "../components/Reveal.jsx";
 import { DecantIcon } from "../components/Icons.jsx";
-import { useTitle } from "../utils";
+import { useSeo } from "../seo";
+import { STATIC_SEO } from "../seoData.js";
 
 const CARDS = [
   { d: "M9 2h6l1 7H8L9 2z", rect: { x: 7, y: 9, width: 10, height: 13 }, title: "Para descubrir", size: "Decant 5 ml",
     text: "La cantidad ideal para probar un perfume durante 2 a 3 semanas. Evalúa su apertura, evolución y fijación real en tu pH antes de comprar el frasco entero." },
   { d: "M8 2h8l1 8H7L8 2z", rect: { x: 6, y: 10, width: 12, height: 12 }, title: "Para disfrutar", size: "Decant 10 ml",
-    text: "Mayor cantidad para llevar siempre contigo en el bolsillo o bolso. Rinde más de 120 atomizaciones, perfecto para rotar entre múltiples aromas de lujo sin gastar de más." },
+    text: "Mayor cantidad para llevar siempre contigo en el bolsillo o bolso. Rinde entre 130 y 150 atomizaciones aproximadas, perfecto para rotar entre múltiples aromas de lujo sin gastar de más." },
 ];
 const ROWS = [
   ["Decant 5 ml", "60 – 75 sprays", "Probar en piel y conocer el rendimiento"],
   ["Decant 10 ml", "130 – 150 sprays", "Llevar de viaje o uso frecuente"],
-  ["Frasco Completo (100 ml)", "1.200 – 1.400 sprays", "Tu fragancia firma o aroma favorito"],
+  ["Frasco Completo (100 – 105 ml)", "1.200 – 1.400 sprays", "Tu fragancia firma o aroma favorito"],
 ];
 
 export default function Decants() {
-  useTitle("¿Qué es un Decant? | SelectParfums");
+  useSeo(STATIC_SEO["/decants"]);
   return (
     <>
       <PageBanner crumb="¿Qué es un decant?" label="Guía de formatos" title="¿Qué es un Decant?"
@@ -36,7 +37,7 @@ export default function Decants() {
           </div>
           <Reveal className="decant-guide">
             <h3 className="decant-guide__title">Tabla de Rendimiento Estimado</h3>
-            <div style={{ overflowX: "auto" }}>
+            <div className="table-scroll" style={{ overflowX: "auto" }} tabIndex={0} role="region" aria-label="Tabla de rendimiento estimado (desplázala horizontalmente en pantallas pequeñas)">
               <table className="decant-table">
                 <thead><tr><th>Formato</th><th>Atomizaciones aprox.</th><th>Uso recomendado</th></tr></thead>
                 <tbody>

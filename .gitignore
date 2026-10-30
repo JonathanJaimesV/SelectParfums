@@ -1,2 +1,11 @@
 node_modules
 dist
+
+# secretos y archivos locales (nunca versionar)
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+.netlify

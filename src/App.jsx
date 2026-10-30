@@ -7,6 +7,8 @@ import Brands from "./pages/Brands.jsx";
 import Decants from "./pages/Decants.jsx";
 import HowToOrder from "./pages/HowToOrder.jsx";
 import PerfumeDetail from "./pages/PerfumeDetail.jsx";
+import NotFound from "./pages/NotFound.jsx";
+import Cart from "./pages/Cart.jsx";
 
 // Panel interno: solo existe en `npm run dev` o si se compila con VITE_ENABLE_ADMIN=true.
 // En el build público normal NO se incluye (el código se elimina del bundle).
@@ -28,11 +30,12 @@ export default function App() {
         <Route path="decants" element={<Decants />} />
         <Route path="como-pedir" element={<HowToOrder />} />
         <Route path="perfume/:slug" element={<PerfumeDetail />} />
+        <Route path="carrito" element={<Cart />} />
         {/* URLs antiguas del sitio estático */}
         {SECTIONS.map((s) => (
           <Route key={s} path={`${s}/${s}.html`} element={<Navigate to={`/${s}`} replace />} />
         ))}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
