@@ -16,9 +16,9 @@ const HERO_IMAGE_SM = "/assets/images/hero/hero-campaign-828.webp";
 const HERO_IMAGE_2X = "/assets/images/hero/hero-campaign-2x.webp";
 
 const TRUST_ITEMS = [
-  ["flask", "Fragancias Originales", "Decants trasvasados de frascos auténticos con atomizadores de calidad."],
-  ["truck", "Envíos a Colombia", "Despacho a Cúcuta y Bogotá por Coordinadora, Interrapidísimo o Servientrega."],
-  ["phone", "Atención Directa", "Asesoría personalizada por WhatsApp en cada paso de tu compra."],
+  ["flask", "Fragancias originales"],
+  ["truck", "Envíos a Cúcuta y Bogotá"],
+  ["phone", "Atención por WhatsApp"],
 ];
 
 export default function Home() {
@@ -61,12 +61,8 @@ export default function Home() {
             <span className="cine-hero__line"><span>con carácter<span className="hero__title-dot">.</span></span></span>
           </h1>
           <div className="cine-hero__foot">
-            <p className="cine-hero__text">
-              Descubre perfumes exclusivos del Medio Oriente y casas de nicho reconocidas. Frascos completos o decants de 5 ml y 10 ml para probar antes de comprar.
-            </p>
             <div className="cine-hero__actions">
               <Link to="/catalogo" className="btn-gold">Explorar catálogo <span className="cine-hero__arrow" aria-hidden="true">&rarr;</span></Link>
-              <Link to="/decants" className="btn-outline">Descubrir decants</Link>
             </div>
           </div>
         </div>
@@ -80,7 +76,6 @@ export default function Home() {
               <Reveal className="houses-section__intro">
                 <p className="section-label">Nuestras casas</p>
                 <h2 className="section-title" id="houses-title">Descubre por casa</h2>
-                <p className="section-subtitle">Elige una casa y explora sus fragancias.</p>
               </Reveal>
               <Link to="/marcas" className="link-arrow">Conocer todas las casas <span className="arrow" aria-hidden="true">&rarr;</span></Link>
             </div>
@@ -95,50 +90,25 @@ export default function Home() {
       {/* ── CONFIANZA ── */}
       <section className="trust-section">
         <div className="container">
-          <div className="trust-grid">
-            {TRUST_ITEMS.map(([icon, title, text]) => (
-              <Reveal key={title} className="trust-card">
-                <div className="trust-card__icon">
-                  <Icon name={icon} />
-                </div>
-                <div>
-                  <h3 className="trust-card__title">{title}</h3>
-                  <p className="trust-card__text">{text}</p>
-                </div>
-              </Reveal>
+          <ul className="trust-grid">
+            {TRUST_ITEMS.map(([icon, title]) => (
+              <li key={title} className="trust-card">
+                <span className="trust-card__icon" aria-hidden="true"><Icon name={icon} /></span>
+                <span className="trust-card__title">{title}</span>
+              </li>
             ))}
-          </div>
-          <div className="trust-section__more">
-            <Link to="/como-pedir" className="link-arrow">Cómo pedir <span className="arrow" aria-hidden="true">&rarr;</span></Link>
-          </div>
+          </ul>
         </div>
       </section>
 
-      {/* ── DECANTS CTA ── */}
-      <section className="decant-section">
-        <div className="container">
-          <Reveal className="decant-section__header">
-            <p className="section-label">Conoce nuestro formato</p>
-            <h2 className="section-title">Prueba antes de comprar</h2>
-            <p className="section-subtitle">
-              Disfruta de perfumes de alta gama en porciones portátiles con atomizadores de calidad.
-            </p>
+      {/* ── DECANTS (banda breve; la guía completa está en /decants) ── */}
+      <section className="decant-band" aria-labelledby="decant-band-title">
+        <div className="container decant-band__inner">
+          <Reveal className="decant-band__copy">
+            <h2 className="decant-band__title" id="decant-band-title">Prueba antes de comprar</h2>
+            <p className="decant-band__text">Decants de 5 ml y 10 ml con atomizadores de calidad.</p>
           </Reveal>
-          <div className="decant-cards">
-            <Reveal className="decant-card">
-              <h3 className="decant-card__title">Para descubrir</h3>
-              <p className="decant-card__size">Decant 5 ml</p>
-              <p className="decant-card__text">La forma ideal de conocer una fragancia antes de comprar el frasco. Perfecto para sumar variedad a tu colección.</p>
-            </Reveal>
-            <Reveal className="decant-card">
-              <h3 className="decant-card__title">Para disfrutar</h3>
-              <p className="decant-card__size">Decant 10 ml</p>
-              <p className="decant-card__text">Más cantidad para llevarla contigo y usarla en tu día a día. Ideal para fragancias que ya conoces y amas.</p>
-            </Reveal>
-          </div>
-          <div style={{ marginTop: 40 }}>
-            <Link to="/decants" className="btn-outline">Leer guía completa de decants</Link>
-          </div>
+          <Link to="/decants" className="btn-outline">Ver guía de decants</Link>
         </div>
       </section>
     </>

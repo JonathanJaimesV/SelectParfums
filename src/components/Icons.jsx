@@ -38,6 +38,14 @@ const PATHS = {
   check: <path d="M5 12.5l4.5 4.5L19 7.5" />,
   trash: <><path d="M4 7h16M10 11v6M14 11v6" /><path d="M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" /></>,
   bottle: <><rect x="9" y="2" width="6" height="4" rx="1" /><path d="M8 6h8v3a3 3 0 0 1 3 3v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-8a3 3 0 0 1 3-3z" /></>,
+  menu: <><path d="M4 6h16M4 12h16M4 18h16" /></>,
+  download: <><path d="M12 3v12" /><path d="M7 11l5 5 5-5" /><path d="M4 20h16" /></>,
+  store: <><path d="M3 9l1.5-5h15L21 9" /><path d="M4 9v10a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V9" /><path d="M9 20v-6h6v6" /><path d="M3 9h18" /></>,
+  layers: <><path d="M12 3l9 5-9 5-9-5 9-5z" /><path d="M3 13l9 5 9-5" /></>,
+  panel: <><rect x="3" y="3" width="7" height="18" rx="1.5" /><rect x="13" y="3" width="8" height="8" rx="1.5" /><rect x="13" y="14" width="8" height="7" rx="1.5" /></>,
+  dot: <circle cx="12" cy="12" r="4" />,
+  collapse: <><path d="M15 6l-6 6 6 6" /><path d="M9 3v18" /></>,
+  clock: <><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3.5 2" /></>,
 };
 export const Icon = ({ name, className = "icon" }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

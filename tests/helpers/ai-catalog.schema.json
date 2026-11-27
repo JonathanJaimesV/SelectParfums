@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/ards-project/ard-spec/main/spec/schemas/ai-catalog.schema.json",
+  "title": "AICatalogManifest",
+  "description": "Versión abreviada del esquema oficial ai-catalog.schema.json de ards-project/ard-spec (Apache-2.0): mismas reglas de specVersion, host, entries, identifier, url XOR data y representativeQueries; sin las descripciones de cada campo y con trustManifest reducido a su campo obligatorio (este manifiesto no lo usa). Solo para las pruebas.",
+  "type": "object",
+  "required": ["specVersion", "entries"],
+  "properties": {
+    "specVersion": { "type": "string", "enum": ["1.0"] },
+    "host": {
+      "type": "object",
+      "required": ["displayName"],
+      "properties": {
+        "displayName": { "type": "string" },
+        "identifier": { "type": "string" },
+        "documentationUrl": { "type": "string", "format": "uri" },
+        "logoUrl": { "type": "string", "format": "uri" },
+        "trustManifest": { "$ref": "#/$defs/trustManifest" }
+      },
+      "additionalProperties": false
+    },
+    "entries": { "type": "array", "items": { "$ref": "#/$defs/catalogEntry" } }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "catalogEntry": {
+      "type": "object",
+      "required": ["identifier", "displayName", "type"],
+      "oneOf": [
+        { "required": ["url"], "not": { "required": ["data"] } },
+        { "required": ["data"], "not": { "required": ["url"] } }
+      ],
+      "properties": {
+        "identifier": { "type": "string", "pattern": "^urn:air:[a-zA-Z0-9.-]+(:[a-zA-Z0-9._-]+)+$" },
+        "displayName": { "type": "string" },
+        "type": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "data": { "type": "object" },
+        "description": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "capabilities": { "type": "array", "items": { "type": "string" } },
+        "representativeQueries": { "type": "array", "minItems": 2, "maxItems": 5, "items": { "type": "string" } },
+        "version": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "metadata": { "type": "object", "additionalProperties": { "type": ["string", "number", "boolean", "null"] } },
+        "trustManifest": { "$ref": "#/$defs/trustManifest" }
+      }
+    },
+    "trustManifest": { "type": "object", "required": ["identity"], "properties": { "identity": { "type": "string" } } }
+  }
+}

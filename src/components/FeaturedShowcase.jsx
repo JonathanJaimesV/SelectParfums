@@ -48,7 +48,6 @@ export default function FeaturedShowcase({ items }) {
           <Reveal className="showcase__intro">
             <p className="section-label">Selección especial</p>
             <h2 className="section-title" id="showcase-title">Fragancias Destacadas</h2>
-            <p className="section-subtitle">Las creaciones más cotizadas y reconocidas de nuestro catálogo.</p>
           </Reveal>
           <Link to="/catalogo" className="link-arrow">Explorar todas las fragancias <span className="arrow" aria-hidden="true">&rarr;</span></Link>
         </div>
@@ -108,9 +107,7 @@ export default function FeaturedShowcase({ items }) {
               {p.marca}
               {p.disponibilidad && <span className="showcase__badge">{p.disponibilidad}</span>}
             </p>
-            <h3 className="showcase__name">
-              <Link to={detailHref} aria-label={`Ver detalles de ${p.marca} ${p.nombre}`}>{p.nombre}</Link>
-            </h3>
+            <h3 className="showcase__name">{p.nombre}</h3>
             {p.descripcion && <p className="showcase__desc">{p.descripcion}</p>}
             <div className="showcase__buy">
               <div className="showcase__sizes" role="group" aria-label={`Formato de ${p.nombre}`}>
@@ -127,7 +124,7 @@ export default function FeaturedShowcase({ items }) {
               </p>
               <div className="showcase__actions">
                 <AddToCartButton product={p} sizeKey={sel.key} className="cart-add--showcase" />
-                <Link to={detailHref} className="link-arrow">Ver ficha <span className="arrow" aria-hidden="true">&rarr;</span></Link>
+                <Link to={detailHref} className="link-arrow" aria-label={`Ver ficha de ${p.marca} ${p.nombre}`}>Ver ficha <span className="arrow" aria-hidden="true">&rarr;</span></Link>
               </div>
             </div>
           </div>

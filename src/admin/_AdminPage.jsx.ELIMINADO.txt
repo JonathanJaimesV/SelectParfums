@@ -1,0 +1,1 @@
+AdminPage.jsx fue ELIMINADO (su contenido se dividió en AdminLayout.jsx + AdminDashboard.jsx + AdminCatalog.jsx).

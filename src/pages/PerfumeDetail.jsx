@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
-import Accordion from "../components/Accordion.jsx";
 import Carousel from "../components/Carousel.jsx";
 import FragranceNotes from "../components/FragranceNotes.jsx";
 import { WhatsAppIcon } from "../components/Icons.jsx";
@@ -35,6 +34,17 @@ export default function PerfumeDetail() {
   const qty = qtyState.slug === slug ? qtyState.qty : 1;
   const setQty = (q) => setQtyState({ slug, qty: q });
   const { units } = useCart();
+  // Barra de compra fija (móvil): aparece solo cuando los botones de compra de la ficha salen de pantalla,
+  // así nunca se duplican ni tapan contenido.
+  const [buyEl, setBuyEl] = useState(null);
+  const [barOn, setBarOn] = useState(false);
+  useEffect(() => {
+    if (!buyEl) return undefined;
+    if (typeof IntersectionObserver === "undefined") { setBarOn(true); return undefined; }
+    const io = new IntersectionObserver(([e]) => setBarOn(!e.isIntersecting), { threshold: 0 });
+    io.observe(buyEl);
+    return () => io.disconnect();
+  }, [buyEl]);
   const p = PRODUCTOS.find((x) => perfumeSlug(x) === slug || String(x.id) === slug);
   const found = Boolean(p);
   const seo = found ? productSeo(p, SITE_URL) : null;
@@ -79,66 +89,67 @@ export default function PerfumeDetail() {
               <Carousel key={p.id} images={galleryOf(p)} alt={`${p.marca} ${p.nombre}`} />
             </div>
             <div className="detail__info">
-              <p className="product-card__brand">{p.marca}</p>
-              <h1 className="detail__name">{p.nombre}</h1>
-              <div className="detail__tags">
-                <span>{p.categoria}</span>
-                {p.disponibilidad && <span className={soldOut ? "is-soldout" : undefined}>{p.disponibilidad}</span>}
+              <header className="detail__head">
+                <p className="detail__brand">{p.marca}</p>
+                <h1 className="detail__name">{p.nombre}</h1>
+                <div className="detail__tags">
+                  <span>{p.categoria}</span>
+                  {p.disponibilidad && <span className={soldOut ? "is-soldout" : undefined}>{p.disponibilidad}</span>}
+                </div>
+              </header>
+
+              <div className="detail__buy">
+                <div className="detail__priceblock" aria-live="polite">
+                  <span className="detail__price-label">{sel.label}</span>
+                  <span className={`detail__price${consult ? " is-consult" : ""}`}>{formatPrice(sel.price)}</span>
+                </div>
+                <div className="size-pills size-pills--lg" role="group" aria-label="Elegir formato">
+                  {opts.map((o) => (
+                    <button key={o.key} type="button" aria-pressed={o.key === sel.key}
+                      className={`size-pill${o.price == null ? " is-consult" : ""}`} onClick={() => setPick({ slug, key: o.key })}>
+                      <span className="size-pill__type">{o.type}</span>
+                      <span className="size-pill__size">{o.size}</span>
+                      <span className="size-pill__price">{formatPrice(o.price)}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="detail__actions" ref={setBuyEl}>
+                  {purchasable ? (
+                    <>
+                      <div className="detail__buyrow">
+                        <QuantityStepper value={qty} onChange={setQty} label={`Cantidad de ${p.marca} ${p.nombre}`} />
+                        <AddToCartButton product={p} sizeKey={sel.key} qty={qty} onAdded={() => setQty(1)} className="detail__add" />
+                      </div>
+                      <p className="detail__subtotal" aria-live="polite">{qty} × {sel.label} = <strong>${formatCOP(sel.price * qty)} COP</strong></p>
+                      <a className="btn-outline detail__consult" target="_blank" rel="noopener noreferrer" href={wa}>
+                        <WhatsAppIcon /> {ctaLabel}
+                      </a>
+                    </>
+                  ) : (
+                    <a className="product-card__buy detail__cta" target="_blank" rel="noopener noreferrer" href={wa}>
+                      <WhatsAppIcon /> {ctaLabel}
+                    </a>
+                  )}
+                </div>
+                {units > 0 && <Link to="/carrito" className="detail__viewcart">Ver mi pedido ({units} {units === 1 ? "unidad" : "unidades"})</Link>}
               </div>
 
-              <div className="detail__priceblock" aria-live="polite">
-                <span className="detail__price-label">{sel.label}</span>
-                <span className={`detail__price${consult ? " is-consult" : ""}`}>{formatPrice(sel.price)}</span>
-              </div>
-              <div className="size-pills size-pills--lg" role="group" aria-label="Elegir formato">
-                {opts.map((o) => (
-                  <button key={o.key} type="button" aria-pressed={o.key === sel.key}
-                    className={`size-pill${o.price == null ? " is-consult" : ""}`} onClick={() => setPick({ slug, key: o.key })}>
-                    <span className="size-pill__type">{o.type}</span>
-                    <span className="size-pill__size">{o.size}</span>
-                    <span className="size-pill__price">{formatPrice(o.price)}</span>
-                  </button>
-                ))}
-              </div>
-
-              {purchasable ? (
-                <>
-                  <div className="detail__buyrow">
-                    <QuantityStepper value={qty} onChange={setQty} label={`Cantidad de ${p.marca} ${p.nombre}`} />
-                    <AddToCartButton product={p} sizeKey={sel.key} qty={qty} onAdded={() => setQty(1)} className="detail__add" />
-                  </div>
-                  <p className="detail__subtotal" aria-live="polite">{qty} × {sel.label} = <strong>${formatCOP(sel.price * qty)} COP</strong></p>
-                  <a className="btn-outline detail__consult" target="_blank" rel="noopener noreferrer" href={wa}>
-                    <WhatsAppIcon /> {ctaLabel}
-                  </a>
-                </>
-              ) : (
-                <a className="product-card__buy detail__cta" target="_blank" rel="noopener noreferrer" href={wa}>
-                  <WhatsAppIcon /> {ctaLabel}
-                </a>
+              {p.descripcion && (
+                <div className="detail__about">
+                  <h2 className="detail__eyebrow">Sobre la fragancia</h2>
+                  <p className="detail__desc">{p.descripcion}</p>
+                </div>
               )}
-              {units > 0 && <Link to="/carrito" className="detail__viewcart">Ver mi pedido ({units} {units === 1 ? "unidad" : "unidades"})</Link>}
 
-              {p.descripcion && <p className="detail__desc">{p.descripcion}</p>}
-
-              <Accordion
-                level={2}
-                defaultOpen={[]}
-                items={[
-                  {
-                    id: "detalles",
-                    title: "Detalles",
-                    content: (
-                      <dl className="acc-dl">
-                        <dt>Género</dt><dd>{generos}</dd>
-                        <dt>Frasco</dt><dd>{p.tamanoFrasco}</dd>
-                        {p.disponibilidad && (<><dt>Estado</dt><dd>{p.disponibilidad}</dd></>)}
-                      </dl>
-                    ),
-                  },
-                ]}
-              />
-              <Link to="/catalogo" className="detail__back">&larr; Volver al catálogo</Link>
+              <div className="detail__specs">
+                <h2 className="detail__eyebrow">Detalles</h2>
+                <dl className="detail__dl">
+                  <dt>Género</dt><dd>{generos}</dd>
+                  <dt>Frasco</dt><dd>{p.tamanoFrasco}</dd>
+                  {p.disponibilidad && (<><dt>Estado</dt><dd>{p.disponibilidad}</dd></>)}
+                </dl>
+              </div>
             </div>
           </div>
         </div>
@@ -157,7 +168,7 @@ export default function PerfumeDetail() {
       )}
 
       {/* Barra de compra fija (solo móvil): siempre a mano, con el formato elegido */}
-      <div className="buybar">
+      <div className={`buybar${barOn ? " is-on" : ""}`}>
         <div className="buybar__info">
           <span className="buybar__label">{sel.label}</span>
           <span className={`buybar__price${consult ? " is-consult" : ""}`}>{formatPrice(sel.price)}</span>

@@ -72,10 +72,7 @@
 .showcase__brand { display: flex; align-items: center; gap: 14px; margin: 0 0 14px; font-size: 0.7rem; font-weight: 600; letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); }
 .showcase__badge { padding: 3px 10px; border: 1px solid var(--ivory-line); border-radius: var(--radius-tag); font-size: 0.62rem; letter-spacing: 0.14em; color: var(--ivory); }
 .showcase__name { margin: 0 0 18px; font-family: var(--font-heading); font-size: clamp(2.3rem, 4vw, 3.5rem); font-weight: 500; line-height: 1.04; letter-spacing: -0.01em; }
-.showcase__name a { color: inherit; transition: color var(--transition); }
-.showcase__name a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
-@media (hover: hover) and (pointer: fine) { .showcase__name a:hover { color: var(--gold); } }
-.showcase__desc { margin: 0 0 26px; max-width: 46ch; color: var(--text-secondary); font-size: 0.98rem; line-height: 1.75; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.showcase__desc { margin: 0 0 26px; max-width: 46ch; color: var(--text-secondary); font-size: 0.98rem; line-height: 1.75; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
 .showcase__buy { padding-top: 20px; border-top: 1px solid var(--border-card); }
 .showcase__sizes { display: flex; flex-wrap: wrap; gap: 0 22px; }

@@ -23,6 +23,28 @@
   [headers.values]
     Cache-Control = "public, max-age=604800"
 
+# Recursos para agentes de IA: archivos estáticos reales (no los resuelve React Router) con su tipo MIME correcto y CORS abierto
+[[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/ai-catalog.json"
+  [headers.values]
+    Content-Type = "application/json; charset=utf-8"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/.well-known/ai-catalog.json"
+  [headers.values]
+    Content-Type = "application/json; charset=utf-8"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=3600"
+
 # SPA: todas las rutas (/catalogo, /marcas...) las resuelve React Router
 [[redirects]]
   from = "/*"

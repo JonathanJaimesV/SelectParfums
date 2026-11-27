@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import Header from "./Header.jsx";
 import BottomNav from "./BottomNav.jsx";
-import { WhatsAppIcon, InstagramIcon } from "./Icons.jsx";
+import { InstagramIcon } from "./Icons.jsx";
 import { WA_GENERIC } from "../utils";
 import CartToast from "../cart/CartToast.jsx";
 
@@ -40,34 +40,22 @@ export default function Layout() {
             </a>
           </div>
 
-          <div className="footer__grid">
-            <nav className="footer__col" aria-label="Explorar">
-              <h2 className="footer__col-title">Explorar</h2>
-              <ul className="footer__nav">
-                {NAV_LINKS.map(([to, label]) => (
-                  <li key={to}><Link to={to}>{label}</Link></li>
-                ))}
-              </ul>
-            </nav>
-
-            <nav className="footer__col" aria-label="Comprar">
-              <h2 className="footer__col-title">Comprar</h2>
-              <ul className="footer__nav">
-                <li><Link to="/como-pedir">Proceso de compra</Link></li>
-                <li><a href={WA_GENERIC} target="_blank" rel="noopener noreferrer">Contactar por WhatsApp</a></li>
-              </ul>
-            </nav>
-
-            <div className="footer__col">
-              <h2 className="footer__col-title">Atención</h2>
-              <ul className="footer__nav">
-                <li>
-                  <a href={WA_GENERIC} target="_blank" rel="noopener noreferrer" className="footer__wa-link">
-                    <WhatsAppIcon /> Escríbenos
-                  </a>
-                </li>
-                <li className="footer__info-text">Envíos a Cúcuta y Bogotá</li>
-                <li className="footer__info-text">Nequi · Bancolombia</li>
+          <div className="footer__meta">
+            <div className="footer__meta-group">
+              <p className="footer__meta-title">Explorar</p>
+              <nav aria-label="Explorar">
+                <ul className="footer__nav">
+                  {NAV_LINKS.map(([to, label]) => (
+                    <li key={to}><Link to={to}>{label}</Link></li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+            <div className="footer__meta-group">
+              <p className="footer__meta-title">Envíos y pagos</p>
+              <ul className="footer__info" aria-label="Envíos y pagos">
+                <li>Envíos a Cúcuta y Bogotá</li>
+                <li>Nequi · Nu</li>
               </ul>
             </div>
           </div>
@@ -75,9 +63,6 @@ export default function Layout() {
           <div className="footer__bottom">
             <p className="footer__copy">&copy; {YEAR} SelectParfums Colombia. Todos los derechos reservados.</p>
             <div className="footer__social">
-              <a href={WA_GENERIC} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="footer__social-link">
-                <WhatsAppIcon />
-              </a>
               <a href="https://www.instagram.com/selectparfums.col/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="footer__social-link">
                 <InstagramIcon />
               </a>
@@ -86,7 +71,6 @@ export default function Layout() {
         </div>
       </footer>
       {!onDetail && <BottomNav />}
-      <a href={WA_GENERIC} className="fab-wa" id="fabWa" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp"><WhatsAppIcon /></a>
     </div>
   );
 }

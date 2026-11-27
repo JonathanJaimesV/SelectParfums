@@ -1,6 +1,6 @@
 // Genera dist/sitemap.xml a partir del catálogo real (src/data/products.js).
 // Funciona en Windows, macOS y Linux. Si falla NO rompe el despliegue, pero lo dice en voz alta.
-import { writeFileSync, readFileSync, existsSync, mkdirSync } from "node:fs";
+import { writeFileSync, readFileSync, existsSync, mkdirSync, copyFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import path from "node:path";
 
@@ -65,6 +65,15 @@ try {
     urls.map((u) => `  <url><loc>${SITE_URL}${u === "/" ? "" : u}</loc></url>`).join("\n") + `\n</urlset>\n`;
   writeFileSync(path.join(dist, "sitemap.xml"), xml);
   console.log(`[postbuild] OK: dist/sitemap.xml con ${urls.length} URLs`);
+
+  // Recursos para agentes de IA: deben existir como archivos reales en dist/ (si no, el fallback SPA de Netlify devolvería index.html).
+  // Vite ya copia public/ → dist/; esto lo comprueba y, si algún archivo faltara, lo copia desde public/ y lo avisa.
+  for (const rel of ["llms.txt", "ai-catalog.json", ".well-known/ai-catalog.json"]) {
+    const src = path.join(root, "public", rel), dst = path.join(dist, rel);
+    if (!existsSync(src)) continue;
+    if (!existsSync(dst)) { mkdirSync(path.dirname(dst), { recursive: true }); copyFileSync(src, dst); console.warn(`[postbuild] ⚠ ${rel} no estaba en dist/: copiado desde public/`); }
+    else console.log(`[postbuild] OK: dist/${rel}`);
+  }
 
   // El <noscript> de index.html trae el número por defecto; si en Netlify se define VITE_WHATSAPP_NUMBER, se sincroniza aquí.
   const envNumber = String(process.env.VITE_WHATSAPP_NUMBER || "").replace(/\D/g, "");

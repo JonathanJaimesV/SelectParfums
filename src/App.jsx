@@ -13,7 +13,10 @@ import Cart from "./pages/Cart.jsx";
 // Panel interno: solo existe en `npm run dev` o si se compila con VITE_ENABLE_ADMIN=true.
 // En el build público normal NO se incluye (el código se elimina del bundle).
 const ADMIN_ENABLED = import.meta.env.DEV || import.meta.env.VITE_ENABLE_ADMIN === "true";
-const AdminPage = ADMIN_ENABLED ? lazy(() => import("./admin/AdminPage.jsx")) : null;
+const AdminLayout = ADMIN_ENABLED ? lazy(() => import("./admin/AdminLayout.jsx")) : null;
+const AdminDashboard = ADMIN_ENABLED ? lazy(() => import("./admin/AdminDashboard.jsx")) : null;
+const AdminCatalog = ADMIN_ENABLED ? lazy(() => import("./admin/AdminCatalog.jsx")) : null;
+const AdminBrands = ADMIN_ENABLED ? lazy(() => import("./admin/AdminBrands.jsx")) : null;
 
 const SECTIONS = ["catalogo", "marcas", "decants", "como-pedir"];
 
@@ -21,7 +24,11 @@ export default function App() {
   return (
     <Routes>
       {ADMIN_ENABLED && (
-        <Route path="admin" element={<Suspense fallback={null}><AdminPage /></Suspense>} />
+        <Route path="admin" element={<Suspense fallback={null}><AdminLayout /></Suspense>}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="perfumes" element={<AdminCatalog />} />
+          <Route path="marcas" element={<AdminBrands />} />
+        </Route>
       )}
       <Route element={<Layout />}>
         <Route index element={<Home />} />

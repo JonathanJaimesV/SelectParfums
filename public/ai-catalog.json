@@ -1,0 +1,103 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "SelectParfums Colombia",
+    "documentationUrl": "https://selectparfumscol.netlify.app/llms.txt",
+    "logoUrl": "https://selectparfumscol.netlify.app/assets/images/Logo.png"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:selectparfumscol.netlify.app:catalog:fragancias",
+      "displayName": "Catálogo de fragancias",
+      "type": "text/html",
+      "url": "https://selectparfumscol.netlify.app/catalogo",
+      "description": "Fragancias árabes y de nicho con filtros; cada ficha muestra marca, notas, precio del frasco y de los decants, y disponibilidad.",
+      "tags": [
+        "perfumería",
+        "fragancias árabes",
+        "catálogo",
+        "decants"
+      ],
+      "representativeQueries": [
+        "perfumes árabes para comprar en Colombia",
+        "catálogo de perfumes Lattafa Armaf Afnan",
+        "comprar decants de perfume de 5 ml o 10 ml"
+      ]
+    },
+    {
+      "identifier": "urn:air:selectparfumscol.netlify.app:catalog:marcas",
+      "displayName": "Marcas de perfumería",
+      "type": "text/html",
+      "url": "https://selectparfumscol.netlify.app/marcas",
+      "description": "Casas de perfumería disponibles en la tienda (Afnan, Armaf, French Avenue, Lattafa y Rasasi) y sus fragancias.",
+      "tags": [
+        "marcas",
+        "perfumería árabe"
+      ],
+      "representativeQueries": [
+        "qué marcas de perfumes árabes vende SelectParfums",
+        "fragancias de Lattafa y Armaf disponibles"
+      ]
+    },
+    {
+      "identifier": "urn:air:selectparfumscol.netlify.app:guide:decants",
+      "displayName": "Guía de decants",
+      "type": "text/html",
+      "url": "https://selectparfumscol.netlify.app/decants",
+      "description": "Explica los decants de 5 ml y 10 ml y cómo sirven para probar una fragancia antes de comprar el frasco completo.",
+      "tags": [
+        "decants",
+        "muestras de perfume"
+      ],
+      "representativeQueries": [
+        "qué es un decant de perfume",
+        "probar un perfume antes de comprar el frasco"
+      ]
+    },
+    {
+      "identifier": "urn:air:selectparfumscol.netlify.app:guide:como-pedir",
+      "displayName": "Cómo pedir",
+      "type": "text/html",
+      "url": "https://selectparfumscol.netlify.app/como-pedir",
+      "description": "Proceso de compra por WhatsApp, medios de pago y envíos a Cúcuta y Bogotá con guía de rastreo.",
+      "tags": [
+        "compra",
+        "envíos",
+        "pagos"
+      ],
+      "representativeQueries": [
+        "cómo comprar perfumes en SelectParfums",
+        "envíos de perfumes a Cúcuta y Bogotá"
+      ]
+    },
+    {
+      "identifier": "urn:air:selectparfumscol.netlify.app:content:llms-txt",
+      "displayName": "Resumen del sitio para agentes (llms.txt)",
+      "type": "text/markdown",
+      "url": "https://selectparfumscol.netlify.app/llms.txt",
+      "description": "Resumen en Markdown del sitio con enlaces a sus secciones públicas.",
+      "tags": [
+        "llms.txt",
+        "resumen del sitio"
+      ],
+      "representativeQueries": [
+        "resumen de qué ofrece SelectParfums",
+        "secciones públicas de SelectParfums Colombia"
+      ]
+    },
+    {
+      "identifier": "urn:air:selectparfumscol.netlify.app:content:sitemap",
+      "displayName": "Mapa del sitio",
+      "type": "application/xml",
+      "url": "https://selectparfumscol.netlify.app/sitemap.xml",
+      "description": "Lista de todas las páginas públicas, incluidas las fichas de cada fragancia.",
+      "tags": [
+        "sitemap"
+      ],
+      "representativeQueries": [
+        "lista de fragancias de SelectParfums",
+        "páginas públicas de SelectParfums Colombia"
+      ]
+    }
+  ]
+}

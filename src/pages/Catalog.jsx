@@ -52,6 +52,15 @@ export default function Catalog() {
     return () => clearTimeout(t);
   }, [hash]);
 
+  useEffect(() => {
+    const openSearch = () => {
+      setShowFilters(true);
+      setTimeout(() => searchRef.current?.focus(), 60);
+    };
+    window.addEventListener("catalog:open-search", openSearch);
+    return () => window.removeEventListener("catalog:open-search", openSearch);
+  }, []);
+
   // Panel móvil: Escape lo cierra y el fondo no se desplaza mientras está abierto
   useEffect(() => {
     if (!showFilters) return undefined;

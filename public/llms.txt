@@ -1,0 +1,24 @@
+# SelectParfums Colombia
+
+> Tienda en línea de perfumería especializada en fragancias árabes y de nicho. Vende frascos completos y decants de 5 ml y 10 ml de las marcas Afnan, Armaf, French Avenue, Lattafa y Rasasi. El pedido se arma en el sitio y se finaliza por WhatsApp, donde el vendedor confirma disponibilidad, pago y envío. Hay envíos a Cúcuta y Bogotá.
+
+## Tienda
+
+- [Inicio](https://selectparfumscol.netlify.app): presentación de la tienda, casas de perfumería y fragancias destacadas.
+- [Catálogo de fragancias](https://selectparfumscol.netlify.app/catalogo): todas las fragancias con filtros; cada ficha muestra marca, notas, precio del frasco y de los decants, y su disponibilidad.
+- [Marcas](https://selectparfumscol.netlify.app/marcas): las casas de perfumería disponibles, cada una con sus fragancias.
+- [Decants](https://selectparfumscol.netlify.app/decants): qué son los decants de 5 ml y 10 ml y por qué sirven para probar una fragancia antes de comprar el frasco.
+
+## Compra y atención
+
+- [Cómo pedir](https://selectparfumscol.netlify.app/como-pedir): pasos del pedido por WhatsApp, medios de pago aceptados y envíos con guía de rastreo.
+
+## Para máquinas
+
+- [Mapa del sitio](https://selectparfumscol.netlify.app/sitemap.xml): lista completa de páginas públicas, incluidas las fichas de cada fragancia (rutas /perfume/…).
+- [Catálogo de recursos para agentes (ARD)](https://selectparfumscol.netlify.app/.well-known/ai-catalog.json): manifiesto JSON con los recursos públicos de este sitio.
+
+## Notas
+
+- La atención al cliente es por WhatsApp desde los botones del sitio; no hay una página de contacto aparte.
+- El carrito y el panel de administración son privados y no forman parte del contenido público.

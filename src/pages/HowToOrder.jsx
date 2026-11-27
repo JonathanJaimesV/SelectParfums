@@ -13,7 +13,6 @@ const STEPS = [
 ];
 const PAYMENTS = [
   ["phone", "Nu & Nequi", "Transferencia instantánea desde tu celular a cualquier hora."],
-  ["bank", "Transferencia Bancaria", "Bancolombia."],
   ["truck", "Envíos a Cúcuta y Bogotá", "Coordinadora, Interrapidísimo o Servientrega con guía de rastreo."],
 ];
 

@@ -3,3 +3,6 @@ Allow: /
 Disallow: /admin
 
 Sitemap: https://selectparfumscol.netlify.app/sitemap.xml
+
+# Descubrimiento para agentes de IA (ARD)
+Agentmap: https://selectparfumscol.netlify.app/.well-known/ai-catalog.json

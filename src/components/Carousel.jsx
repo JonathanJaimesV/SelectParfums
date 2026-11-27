@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "./Icons.jsx";
-import { srcSetOf } from "../utils";
+import { srcSetOf, thumbOf } from "../utils";
 
 /**
  * Carrusel con scroll-snap nativo: el swipe lo resuelve el navegador (fluido, con inercia y
- * sin pelear con el scroll vertical). Mantiene flechas (solo puntero fino), puntos y teclado.
+ * sin pelear con el scroll vertical). Mantiene flechas (solo puntero fino), puntos (móvil), miniaturas (escritorio) y teclado.
  * Las imágenes que no existen (404) se descartan: solo se muestran fotos reales.
  */
 export default function Carousel({ images, alt }) {
@@ -60,6 +60,15 @@ export default function Carousel({ images, alt }) {
         <div className="carousel__dots">
           {slides.map((_, pos) => (
             <button key={pos} className={`carousel__dot${pos === cur ? " is-active" : ""}`} onClick={() => go(pos)} aria-label={`Ver imagen ${pos + 1}`} aria-current={pos === cur} />
+          ))}
+        </div>
+      )}
+      {multi && (
+        <div className="carousel__thumbs">
+          {slides.map(({ src }, pos) => (
+            <button key={pos} className={`carousel__thumb${pos === cur ? " is-active" : ""}`} onClick={() => go(pos)} aria-label={`Ver imagen ${pos + 1}`} aria-current={pos === cur}>
+              <img src={thumbOf(src)} alt="" loading="lazy" decoding="async" draggable={false} />
+            </button>
           ))}
         </div>
       )}
